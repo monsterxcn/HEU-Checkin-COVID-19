@@ -50,23 +50,24 @@ jobs:
         sed -i '20 r action-pass.txt' action.py
         sed -i '21 r action-bound.txt' action.py
         sed -i '22 r action-data.txt' action.py
-    - name: Checkin
+    - name: Checkin Action
       env:
         TZ: Asia/Shanghai
       run: | 
-        python action.py
-        echo `date +"%Y-%m-%d %H:%M:%S %A"` Done >> time.log
-        echo >> time.log
+        mkdir log
+        echo "----------------------------" >> log/time.log
+        echo `date +"%Y-%m-%d %H:%M:%S %A"` >> log/time.log
+        python action.py >> log/time.log
+        echo >> log/time.log
     - name: Secrets Delete
       run: | 
         rm -f action*
-    - name: Git Commit
-      run: |
-        git config --global user.email AutoupdateRobot@email.com
-        git config --global user.name AutoupdateRobot
-        git add .
-        git commit -m "update time" -a
-    - name: Git Push
-      uses: ad-m/github-push-action@master
+    - name: Deploy Log
+      uses: docker://peaceiris/gh-pages:v2
+      env:
+        TZ: Asia/Shanghai
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUBLISH_BRANCH: log
+        PUBLISH_DIR: ./log
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        emptyCommits: false
