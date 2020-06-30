@@ -35,11 +35,11 @@
 4. **运行前务必修改并核实自己的登录用户、表单数据、SMTP 发信邮箱！**
 5. 配置打卡定时任务
 
-   这个版本的自动打卡通过服务器或本地主机的定时任务实现自动打卡。请参考《[Mark 一个 HEU 自动打卡代码 - MonsterX 小怪兽](https://monsterx.cn/tech/Auto-Checkin-COVID19.html#toc_7)》设置定时任务。
+   这个版本通过服务器或本地主机的定时任务实现自动打卡。请参考《[Mark 一个 HEU 自动打卡代码 - MonsterX 小怪兽](https://monsterx.cn/tech/Auto-Checkin-COVID19.html#toc_7)》自行设置定时任务
 
 ## GitHub Actions 版
 
-为提升广大 HEU 无服务器玩家的体验，本仓库着手实现基于 GitHub Actions 的自动打卡。灵感源自一个用于 Microsoft 365 E5 刷 API 调用次数帮助订阅自动续期的仓库《[wangziyingwen/AutoApiSecret](https://github.com/wangziyingwen/AutoApiSecret)》。
+为提升广大 HEU 无服务器玩家的体验，本仓库着手实现基于 GitHub Actions 的自动打卡。灵感源自一个使用 GitHub Actions 刷 API 调用次数帮助 Microsoft 365 E5 订阅自动续期的仓库《[wangziyingwen/AutoApiSecret](https://github.com/wangziyingwen/AutoApiSecret)》。
 
 部署 GitHub Actions 说明：
 
@@ -53,12 +53,14 @@
    | SECRET_BOUND | mybound='fieldCXXXdqszdjtx,......,fieldMQJCRlxfs' |
    | SECRET_DATA | mydata=r'{"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"}' |
 
-3. **务必核实自己的登录用户、表单数据！**
+3. **运行前务必修改并核实自己的登录用户、表单数据！**
 4. 给自己的仓库点个 Star 等待几分钟（用于激活 GitHub Actions）
 5. 查看 GitHub Actions 状态（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/actions)）
 6. 检查打卡执行情况，切换到 `log` 分支查看 time.log 文件
 
 Workflow 显示成功后 GitHub Actions Schedule 将保持激活状态，即打卡任务在每天指定时刻运行（本项目设定时间为 8:00）。你也可以根据自己需要在 .github/workerflows/auto.yml Line12 修改打卡执行时间，严格按照 Linux cron 格式填写。请注意这里的时间为 Coordinated Universal Time (UTC)，例如北京时间 2020-06-30 08:00 转换为 UTC 时间是 2020-06-30 00:00。
+
+> Github Actions 版打卡脚本自身无邮件提醒功能，但是可以从 GitHub Settings 中开启工作流运行提醒邮件，这样省去了 Python SMTP 配置而且更加简洁。点 [这里](https://github.com/settings/notifications) 取消勾选 Send notifications for failed workflows only 即可。
 
 ## 注意
 
