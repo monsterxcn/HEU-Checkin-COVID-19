@@ -56,6 +56,7 @@
 3. **务必核实自己的登录用户、表单数据！**
 4. 给自己的仓库点个 Star 等待几分钟（用于激活 GitHub Actions）
 5. 查看 GitHub Actions 状态（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/actions)）
+6. 检查打卡执行情况，切换到 `log` 分支查看 time.log 文件
 
 Workflow 显示成功后 GitHub Actions Schedule 将保持激活状态，即打卡任务在每天指定时刻运行（本项目设定时间为 8:00）。你也可以根据自己需要在 .github/workerflows/auto.yml Line12 修改打卡执行时间，严格按照 Linux cron 格式填写。请注意这里的时间为 Coordinated Universal Time (UTC)，例如北京时间 2020-06-30 08:00 转换为 UTC 时间是 2020-06-30 00:00。
 
