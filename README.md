@@ -27,37 +27,43 @@
    - Server/checkin.sh 修改其中的路径为实际路径，它用于 Linux 服务器设置定时任务，仅供参考
    - Server/checkin.log 若使用 checkin.sh 则该文件将记录打卡日志，无需修改
 2. SMTP 发信邮箱设置并不是必须的，仅用于服务器打卡完成后发送邮件提醒
+
    如果不需要这个功能，直接删除 Server/checkin.py Line152-176 即可
 3. 安装 pip 依赖项 `lxml` `requests`
+
    命令行执行 `python -m pip install lxml requests`
 4. **运行前务必修改并核实自己的登录用户、表单数据、SMTP 发信邮箱！**
 5. 配置打卡定时任务
+
    这个版本的自动打卡通过服务器或本地主机的定时任务实现自动打卡。请参考《[Mark 一个 HEU 自动打卡代码 - MonsterX 小怪兽](https://monsterx.cn/tech/Auto-Checkin-COVID19.html#toc_7)》设置定时任务。
 
 ## GitHub Actions 版
 
-为提升广大 HEU 无服务器玩家的体验，本仓库着手实现基于 GitHub Actions 的自动打卡。灵感源自《[wangziyingwen/AutoApiSecret](https://github.com/wangziyingwen/AutoApiSecret)》这个用于 Microsoft 365 E5 刷 API 调用次数帮助订阅自动续期的仓库。
+为提升广大 HEU 无服务器玩家的体验，本仓库着手实现基于 GitHub Actions 的自动打卡。灵感源自一个用于 Microsoft 365 E5 刷 API 调用次数帮助订阅自动续期的仓库《[wangziyingwen/AutoApiSecret](https://github.com/wangziyingwen/AutoApiSecret)》。
 
 部署 GitHub Actions 说明：
 
 1. Fork 本仓库
-2. 在仓库的 Settings 中添加 4 个 Secrets（[点这里](/settings/secrets)）
+2. 在仓库的 Settings 中添加 4 个 Secrets（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/settings/secrets)）
+   
    | Name | Value |
    |:----:|:------|
    | SECRET_ID | myid="2018XXXXXX" |
    | SECRET_PASS | mypass="PASSWORD" |
    | SECRET_BOUND | mybound='fieldCXXXdqszdjtx,......,fieldMQJCRlxfs' |
    | SECRET_DATA | mydata=r'{"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"}' |
-3. **务必核实自己的登录用户、表单数据！**
-4. 给自己的仓库点个 Star 等待几分钟
-5. 查看 GitHub Actions 状态（[点这里](/actions)）
 
-状态正常后，打卡任务将在每天指定时刻运行，本项目设定时间为 8:00。你也可以根据自己需要在 .github/workerflows/auto.yml Line12 修改打卡执行时间，请注意时区为。
+3. **务必核实自己的登录用户、表单数据！**
+4. 给自己的仓库点个 Star 等待几分钟（用于激活 GitHub Actions）
+5. 查看 GitHub Actions 状态（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/actions)）
+
+Workflow 显示成功后 GitHub Actions Schedule 将保持激活状态，即打卡任务在每天指定时刻运行（本项目设定时间为 8:00）。你也可以根据自己需要在 .github/workerflows/auto.yml Line12 修改打卡执行时间，严格按照 Linux cron 格式填写。请注意这里的时间为 Coordinated Universal Time (UTC)，例如北京时间 2020-06-30 08:00 转换为 UTC 时间是 2020-06-30 00:00。
 
 ## 注意
 
  - 本项目使用的 Python 版本为 3.x。已知 Python 2.x 会出现错误，不予修复
  - 本项目的主体功能完全不是我写的，出处是这篇《[疫情期间自动健康打卡暨 CAS 单点登录认证实践 - SiteForZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/)》
+ - 如需要停止 GitHub Action 每日自动打卡，请删除仓库或删除 .github/workerflows/auto.yml 文件
  - 使用本项目因操作不当导致的平安行动打卡错误责任自负（比如你不检查表单数据提交了别的同学的数据到自己的平安行动中）
  - 如果你确实啥也不会，那么我推荐你使用 [腐败街](https://www.fubaijie.cn) 提供的定时打卡功能
  - Licence & Author: MIT @ [ZJW](https://zjw1.top) & [Monst.x](https://monsterx.cn)

@@ -6,12 +6,10 @@ on:
   push:
     tags:
     - 'v*'
-  #  branches: 
+  #  Coordinated Universal Time (UTC)
   #    - master
   schedule:
-    - cron: '20 13 * * *'
-      env:
-        TZ: Asia/Shanghai
+    - cron: '0 0 * * *'
   watch:
     types: [started]
    
