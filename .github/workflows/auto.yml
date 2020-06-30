@@ -1,0 +1,67 @@
+name: Auto Checkin
+
+on: 
+  release:
+    types: [published]
+  push:
+    tags:
+    - 'v*'
+  #  branches: 
+  #    - master
+  schedule:
+    - cron: '20 13 * * *'
+      env:
+        TZ: Asia/Shanghai
+  watch:
+    types: [started]
+   
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 start
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Python Setup
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Addons Install
+      run: |
+        pip install lxml requests
+    - name: Secrets Get
+      env: 
+        SECRET_ID: ${{ secrets.SECRET_ID }}
+        SECRET_PASS: ${{ secrets.SECRET_PASS }}
+        SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
+        SECRET_DATA: ${{ secrets.SECRET_DATA }}
+      run: | 
+        cp checkin.py action.py
+        echo $SECRET_ID > action-id.txt
+        echo $SECRET_PASS > action-pass.txt
+        echo $SECRET_BOUND > action-bound.txt
+        echo $SECRET_DATA > action-data.txt
+        sed -i '19 r action-id.txt' action.py
+        sed -i '20 r action-pass.txt' action.py
+        sed -i '21 r action-bound.txt' action.py
+        sed -i '22 r action-data.txt' action.py
+    - name: Checkin
+      env:
+        TZ: Asia/Shanghai
+      run: | 
+        python action.py
+        echo `date +"%Y-%m-%d %H:%M:%S %A"` Done >> time.log
+        echo >> time.log
+    - name: Secrets Delete
+      run: | 
+        rm -f action*
+    - name: Git Commit
+      run: |
+        git config --global user.email AutoupdateRobot@email.com
+        git config --global user.name AutoupdateRobot
+        git add .
+        git commit -m "update time" -a
+    - name: Git Push
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
