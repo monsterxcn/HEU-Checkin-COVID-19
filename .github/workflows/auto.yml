@@ -7,9 +7,8 @@ on:
     tags:
     - 'v*'
   #  Coordinated Universal Time (UTC)
-  #    - master
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 23 * * *'
   watch:
     types: [started]
    
@@ -55,10 +54,8 @@ jobs:
         TZ: Asia/Shanghai
       run: | 
         mkdir log
-        echo "----------------------------" >> log/time.log
         echo `date +"%Y-%m-%d %H:%M:%S %A"` >> log/time.log
         python action.py >> log/time.log
-        echo >> log/time.log
     - name: Secrets Delete
       run: | 
         rm -f action*
