@@ -4,6 +4,12 @@
 """
 平安行动自动打卡
 
+请事先安装好 lxml 和 requests 模块
+
+    pip install lxml requests
+
+然后修改行 41 42 11 119 为自己的数据
+
 Created on 2020-04-13 20:20
 @author: ZhangJiawei & Monst.x
 """
