@@ -3,24 +3,22 @@
 <div align="center">HEU-Checkin-COVID-19</div></br>
 
 
-这是一个方便 HEU 宅家人士搞定每日平安行动打卡的助手，使用本项目前你需要确认自己不会到处瞎跑、不会危害社会，然后需要会一点点使用浏览器的技巧。实际这个项目部署起来并没有你想的那么麻烦。可选用的部署方式有两种：Server 用于有服务器人士，GitHub Actions 用于无服务器人士。
+这是一个方便 HEU 宅家人士搞定每日平安行动打卡的小项目，使用前你需要确认自己不会到处瞎跑、不会危害社会，会一点点使用浏览器的技巧。实际这个项目部署起来并没有你想的那么麻烦。部署方式有两种：有稳定服务器的可以使用 Server 版，没有也可以通过 GitHub Actions 版实现解放。
 
 ## 准备
 
-部署本项目需要四项数据：教务处学生账号、教务处密码、平安行动表单 `BoundFields` 、平安行动表单 `FormData` 。
+签到脚本有两种代码实现：Python by [ZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/) / Ruby by [XYenon](https://gist.github.com/XYenon/79317d63e7f769e5bdff5b595d709b65)，可能需要的数据包括：教务处学生账号、教务处密码、平安行动表单 `BoundFields` 、平安行动表单 `FormData` 。Python 版本四项数据都需要，而 Ruby 版本只需要账号密码。
 
-后两项的获取需要电脑端浏览器 + 一点点使用浏览器的技巧，具体操作：
+关于后两项的获取，需要电脑端浏览器 + 一点点使用浏览器的技巧，具体操作可参考《[获取 form Data](https://monsterx.cn/tech/Auto-Checkin-COVID19.html#toc_1)》中的图片：
 
 1. 在进入平安行动打卡界面后按下 `F12` 调出审查工具，选中 Network / 网络 项
 2. **确认表单数据正确** 后提交表单，之后会弹出“办理成功！”的字样
 3. 不要关闭页面，这时审查工具中最下方会多出一个 `doAction` 的项目，点击它
 4. 在它的 `Header` 中查看 `Form Data` 即可找到本项目需要的 `BoundFields` 和 `FormData`
 
-如果需要，请参考《[获取 form Data](https://monsterx.cn/tech/Auto-Checkin-COVID19.html#toc_1)》中的图片。
-
 获取了这些数据后即可开始部署自己的自动打卡任务，无论你选择下面的哪一种方式，**请在运行前务必修改并核实自己的登录用户、表单数据（、SMTP 发信邮箱）！**
 
-## Server 版
+## Server 版（以 Python 为例）
 
 经过我简单的测试和修改之后，该项目用于服务器部署的完整代码已存放于 Server 目录下。使用前确保使用 `pip install` 安装了 `lxml` `requests` 库。
 
@@ -45,36 +43,35 @@
 
 ## GitHub Actions 版
 
-为提升广大 HEU 无服务器玩家的体验，本仓库着手实现基于 GitHub Actions 的自动打卡。灵感源自一个使用 GitHub Actions 刷 API 调用次数帮助 Microsoft 365 E5 订阅自动续期的仓库《[wangziyingwen/AutoApiSecret](https://github.com/wangziyingwen/AutoApiSecret)》。
+为提升广大 HEU 无服务器玩家的体验，本仓库着手实现基于 GitHub Actions 的自动打卡。灵感源自一个使用 GitHub Actions 刷 API 调用次数帮助 Microsoft 365 E5 订阅自动续期的仓库 [wangziyingwen/AutoApiSecret](https://github.com/wangziyingwen/AutoApiSecret) 。
 
-部署 GitHub Actions 说明：
+部署 GitHub Actions 前你需要确认自己选择的脚本说明：
 
 1. Fork 本仓库
-2. 在仓库的 Settings 中添加 4 个 Secrets（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/settings/secrets)）
+2. 在仓库的 Settings 中添加 Secrets（在 [这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/settings/secrets) 按代码版本需要添加）
    
-   | Name | Value |
-   |:----:|:------|
-   | SECRET_ID | myid="2018XXXXXX" |
-   | SECRET_PASS | mypass="PASSWORD" |
-   | SECRET_BOUND | mybound='fieldCXXXdqszdjtx,......,fieldMQJCRlxfs' |
-   | SECRET_DATA | mydata=r'{"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"}' |
+   | Name | Value | Version |
+   |:----:|:------|:-------:|
+   | SECRET_ID | myid="2018XXXXXX" | py rb |
+   | SECRET_PASS | mypass="PASSWORD" | py rb |
+   | SECRET_BOUND | mybound='fieldCXXXdqszdjtx,......,fieldMQJCRlxfs' | py |
+   | SECRET_DATA | mydata=r'{"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"}' | py |
 
 3. **运行前务必修改并核实自己的登录用户、表单数据！**
-4. 给自己的仓库点个 Star 等待几分钟（用于激活 GitHub Actions）
+4. 给自己的仓库点个 Star 等待 1 分钟（激活 GitHub Actions）
 5. 查看 GitHub Actions 状态（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/actions)）
 6. 检查打卡执行情况，切换到 `log` 分支查看 time.log 文件
 
-Workflow 成功后 GitHub Actions Schedule 将保持激活状态，打卡任务在每天指定时刻运行（本项目设定时间为 7:00）。你也可以根据自己需要在 .github/workerflows/auto.yml Line12 修改打卡执行时间，严格按照 Linux Crontab 格式填写。请注意这里的时间为 Coordinated Universal Time (UTC)，例如北京时间 2020-06-30 07:00 转换为 UTC 时间是 2020-06-29 23:00。
+Workflow 成功后即可放心睡觉，GitHub Actions Schedule 事件将使打卡任务在每天指定时刻运行（本项目设定时间为 8:00）。你也可以根据自己需要在 .github/workerflows 文件夹下 .yml 文件 Line6 修改打卡执行时间，严格按照 POSIX cron 语法填写，具体说明请参考《[触发工作流程的事件 安排的事件：schedule](https://docs.github.com/cn/actions/reference/events-that-trigger-workflows#)》。务必留意这里使用 Coordinated Universal Time (UTC)，北京时间 2020-06-30 08:00 转换为 UTC 时间是 2020-06-30 0:00。
 
 > Github Actions 版打卡脚本自身无邮件提醒功能，但是可以从 GitHub Settings 中开启工作流运行提醒邮件，这样省去了 Python SMTP 配置而且更加简洁。点 [这里](https://github.com/settings/notifications) **取消勾选** Send notifications for failed workflows only 即可。
 
-> 目前 time.log 日志只能保存最近一次运行记录，等我学会了希望改成记录所有记录。
+> ~~目前 time.log 日志只能保存最近一次运行记录，等我学会了希望改成记录所有记录~~ time.log 日志已改为记录历次执行结果。
 
 ## 注意
 
  - 本项目使用的 Python 版本为 3.x。已知 Python 2.x 会出现错误，不予修复
- - 本项目的打卡框架完全不是我写的，由 [ZJW](https://zjw1.top) 学长发布于这篇《[疫情期间自动健康打卡暨 CAS 单点登录认证实践 - SiteForZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/)》
- - 如需要停止 GitHub Action 每日自动打卡，请删除仓库或删除 .github/workerflows/auto.yml 文件
+ - 如需要停止 GitHub Action 每日自动打卡，请删除仓库或删除 .github/workerflows 文件夹下 .yml 文件
  - 使用本项目因操作不当导致的平安行动打卡错误责任自负（比如你不检查表单数据提交了别的同学的数据到自己的平安行动中）
  - 如果你确实啥也不会，那么我推荐你使用 [腐败街](https://www.fubaijie.cn) 提供的定时打卡功能
- - Licence / Author: [ZJW](https://zjw1.top) | MIT @ [Monst.x](https://monsterx.cn)
+ - Licence & Author: [ZJW](https://zjw1.top) | [XYenon](https://xyenon.bid) | MIT @ [Monst.x](https://monsterx.cn)

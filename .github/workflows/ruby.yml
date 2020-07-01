@@ -1,4 +1,4 @@
-name: Auto Checkin
+name: Ruby Checkin
 
 on: 
   #  Coordinated Universal Time (UTC)
@@ -15,17 +15,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Python Setup
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-    # 缓存 pip 模块
-    - name: Pip Cache
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: ${{ runner.os }}-pip-
     # 缓存历史记录于 ~/.cache/actions.log
     - name: Log Cache
       uses: actions/cache@v2
@@ -33,25 +22,23 @@ jobs:
         path: ~/.cache
         key: ${{ runner.os }}-log-${{ hashFiles('**/actions.log') }}
         restore-keys: ${{ runner.os }}-log-
+    - name: Ruby Setup
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6
     - name: Addons Install
-      run: pip install lxml requests
+      run: gem install watir
     # 获取机密并写入临时文件和脚本
     - name: Secrets Get
       env: 
         SECRET_ID: ${{ secrets.SECRET_ID }}
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
-        SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
-        SECRET_DATA: ${{ secrets.SECRET_DATA }}
       run: | 
-        cp checkin.py action.py
+        cp checkin.rb action.rb
         echo $SECRET_ID > action-id.txt
         echo $SECRET_PASS > action-pass.txt
-        echo $SECRET_BOUND > action-bound.txt
-        echo $SECRET_DATA > action-data.txt
-        sed -i '19 r action-id.txt' action.py
-        sed -i '20 r action-pass.txt' action.py
-        sed -i '21 r action-bound.txt' action.py
-        sed -i '22 r action-data.txt' action.py
+        sed -i '5 r action-id.txt' action.rb
+        sed -i '6 r action-pass.txt' action.rb
     # 执行签到前复制缓存的 actions.log 并将此次签到记录写入文件后面
     - name: Checkin Action
       env:
@@ -59,19 +46,18 @@ jobs:
       run: | 
         mkdir log
         if [ -f "~/.cache/actions.log" ] ; then cp ~/.cache/actions.log log/actions.log ; fi
-        echo "============================" >> log/actions.log && echo `date +"%Y-%m-%d %H:%M:%S %A"` >> log/actions.log
-        python action.py >> log/actions.log && echo >> log/actions.log
+        ruby action.rb >> log/actions.log && echo >> log/actions.log
         cp log/actions.log ~/.cache/actions.log
     # 删除机密
     - name: Secrets Delete
       run: rm -f action*
-    # 发布 log 文件夹下历史记录文件到 log 分支
+    # 发布 log 文件夹下历史记录文件到 log-rb 分支
     - name: Deploy Log
       uses: docker://peaceiris/gh-pages:v2
       env:
         TZ: Asia/Shanghai
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_BRANCH: log
+        PUBLISH_BRANCH: log-rb
         PUBLISH_DIR: ./log
       with:
         emptyCommits: false
