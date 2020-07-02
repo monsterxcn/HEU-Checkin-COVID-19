@@ -2,12 +2,10 @@
 # frozen_string_literal: true
 
 require 'watir'
+require 'webdrivers/chromedriver'
 
-
-
-
-USERNAME = myid
-PASSWORD = mypass
+USERNAME = ENV['SECRET_ID']
+PASSWORD = ENV['SECRET_PASS']
 
 puts '========================='
 browser = Watir::Browser.new :chrome, headless: true
