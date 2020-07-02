@@ -1,14 +1,14 @@
 name: Ruby Checkin
 
-on: 
+on:
   release:
     types: [published]
   push:
     tags:
-    - 'v*'
+      - "v*"
   #  Coordinated Universal Time (UTC)
   schedule:
-    - cron: '0 23 * * *'
+    - cron: "0 23 * * *"
   watch:
     types: [started]
 
@@ -18,55 +18,48 @@ jobs:
     # 只有自己点 Star 才触发
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-    # 缓存历史记录于 ~/.cache/actions.log
-    - name: Log Cache
-      uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-log-${{ hashFiles('**/actions.log') }}
-        restore-keys: ${{ runner.os }}-log-
-    - name: Ruby Setup
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - name: Addons Install
-      run: |
-        sudo apt-get install -y wget unzip xvfb libxi6 libgconf-2-4 libnss3 google-chrome-stable
-        wget https://chromedriver.storage.googleapis.com/83.0.4103.39/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip -d /usr/local/bin/
-        gem install watir
-    # 获取机密并写入临时文件和脚本
-    - name: Secrets Get
-      env: 
-        SECRET_ID: ${{ secrets.SECRET_ID }}
-        SECRET_PASS: ${{ secrets.SECRET_PASS }}
-      run: | 
-        cp checkin.rb action.rb
-        echo $SECRET_ID > action-id.txt
-        echo $SECRET_PASS > action-pass.txt
-        sed -i '5 r action-id.txt' action.rb
-        sed -i '6 r action-pass.txt' action.rb
-    # 执行签到前复制缓存的 actions.log 并将此次签到记录写入文件后面
-    - name: Checkin Action
-      env:
-        TZ: Asia/Shanghai
-      run: | 
-        mkdir log
-        if [ -f "vendor/bundle/actions.log" ] ; then cp vendor/bundle/actions.log log/actions.log ; fi
-        ruby action.rb >> log/actions.log && echo >> log/actions.log
-        cp log/actions.log vendor/bundle/actions.log
-    # 删除机密
-    - name: Secrets Delete
-      run: rm -f action*
-    # 发布 log 文件夹下历史记录文件到 log-rb 分支
-    - name: Deploy Log
-      uses: docker://peaceiris/gh-pages:v2
-      env:
-        TZ: Asia/Shanghai
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_BRANCH: log-rb
-        PUBLISH_DIR: ./log
-      with:
-        emptyCommits: false
+      - name: Checkout
+        uses: actions/checkout@master
+      # 缓存历史记录于 ~/.cache/actions.log
+      - name: Log Cache
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-log-${{ hashFiles('**/actions.log') }}
+          restore-keys: ${{ runner.os }}-log-
+      - name: Ruby Setup
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.5
+      - name: Addons Install
+        run: |
+          sudo apt-get install -y wget unzip xvfb libxi6 libgconf-2-4 libnss3 google-chrome-stable
+          gem install watir webdrivers
+      # 获取机密并写入临时文件和脚本
+      - name: Secrets Get
+        env:
+          SECRET_ID: ${{ secrets.SECRET_ID }}
+          SECRET_PASS: ${{ secrets.SECRET_PASS }}
+        run: cp checkin.rb action.rb
+      # 执行签到前复制缓存的 actions.log 并将此次签到记录写入文件后面
+      - name: Checkin Action
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          mkdir log
+          if [ -f "vendor/bundle/actions.log" ] ; then cp vendor/bundle/actions.log log/actions.log ; fi
+          ruby action.rb >> log/actions.log && echo >> log/actions.log
+          cp log/actions.log vendor/bundle/actions.log
+      # 删除机密
+      - name: Secrets Delete
+        run: rm -f action*
+      # 发布 log 文件夹下历史记录文件到 log-rb 分支
+      - name: Deploy Log
+        uses: docker://peaceiris/gh-pages:v2
+        env:
+          TZ: Asia/Shanghai
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: log-rb
+          PUBLISH_DIR: ./log
+        with:
+          emptyCommits: false
