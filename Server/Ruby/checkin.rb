@@ -3,7 +3,7 @@
 
 # 请事先安装好 watir 模块
 # 
-#     gem install watir
+#     gem install watir headless
 # 
 # 然后修改行 12 13 为自己的数据
 
@@ -14,6 +14,7 @@ PASSWORD = 'Password'
 
 puts '========================='
 browser = Watir::Browser.new :chrome, headless: true
+# browser = Watir::Browser.new :chrome, :switches => %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --disable-notifications --start-maximized --disable-gpu --headless]
 browser.goto 'http://ehome.hrbeu.edu.cn/'
 
 def login(browser, username, password)

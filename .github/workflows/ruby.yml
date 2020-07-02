@@ -1,12 +1,17 @@
 name: Ruby Checkin
 
 on: 
+  release:
+    types: [published]
+  push:
+    tags:
+    - 'v*'
   #  Coordinated Universal Time (UTC)
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 23 * * *'
   watch:
     types: [started]
-   
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,15 +24,19 @@ jobs:
     - name: Log Cache
       uses: actions/cache@v2
       with:
-        path: ~/.cache
+        path: vendor/bundle
         key: ${{ runner.os }}-log-${{ hashFiles('**/actions.log') }}
         restore-keys: ${{ runner.os }}-log-
     - name: Ruby Setup
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.6
+        ruby-version: 2.5
     - name: Addons Install
-      run: gem install watir
+      run: |
+        sudo apt-get install -y wget unzip xvfb libxi6 libgconf-2-4 libnss3 google-chrome-stable
+        wget https://chromedriver.storage.googleapis.com/83.0.4103.39/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip -d /usr/local/bin/
+        gem install watir
     # 获取机密并写入临时文件和脚本
     - name: Secrets Get
       env: 
@@ -45,9 +54,9 @@ jobs:
         TZ: Asia/Shanghai
       run: | 
         mkdir log
-        if [ -f "~/.cache/actions.log" ] ; then cp ~/.cache/actions.log log/actions.log ; fi
+        if [ -f "vendor/bundle/actions.log" ] ; then cp vendor/bundle/actions.log log/actions.log ; fi
         ruby action.rb >> log/actions.log && echo >> log/actions.log
-        cp log/actions.log ~/.cache/actions.log
+        cp log/actions.log vendor/bundle/actions.log
     # 删除机密
     - name: Secrets Delete
       run: rm -f action*
