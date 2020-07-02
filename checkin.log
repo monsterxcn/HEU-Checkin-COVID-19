@@ -44,3 +44,16 @@ IndexError: list index out of range
 [info] Task Finished at 2020-07-03 00:31:52 Friday
 ============================
 
+============================
+[debug] Begin to login ...
+
+[error] :.:.:.:.: Except return :.:.:.:.:
+[error] Python Error: 
+ Traceback (most recent call last):
+  File "checkin.py", line 70, in <module>
+    casRes = response302.history[0]
+IndexError: list index out of range
+
+[info] Task Finished at 2020-07-03 07:08:31 Friday
+============================
+
