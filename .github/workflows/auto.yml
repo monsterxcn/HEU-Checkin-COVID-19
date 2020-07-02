@@ -1,12 +1,17 @@
 name: Auto Checkin
 
 on: 
+  release:
+    types: [published]
+  push:
+    tags:
+    - 'v*'
   #  Coordinated Universal Time (UTC)
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '0 23 * * *'
   watch:
     types: [started]
-   
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,13 +31,7 @@ jobs:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: ${{ runner.os }}-pip-
-    # 缓存历史记录于 ~/.cache/actions.log
-    - name: Log Cache
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache
-        key: ${{ runner.os }}-log-${{ hashFiles('**/actions.log') }}
-        restore-keys: ${{ runner.os }}-log-
+    # 安装 pip 模块
     - name: Addons Install
       run: pip install lxml requests
     # 获取机密并写入临时文件和脚本
@@ -52,26 +51,24 @@ jobs:
         sed -i '20 r action-pass.txt' action.py
         sed -i '21 r action-bound.txt' action.py
         sed -i '22 r action-data.txt' action.py
-    # 执行签到前复制缓存的 actions.log 并将此次签到记录写入文件后面
+    # 执行签到并将此次签到记录写入历史记录后面
     - name: Checkin Action
       env:
         TZ: Asia/Shanghai
       run: | 
-        mkdir log
-        if [ -f "~/.cache/actions.log" ] ; then cp ~/.cache/actions.log log/actions.log ; fi
-        echo "============================" >> log/actions.log && echo `date +"%Y-%m-%d %H:%M:%S %A"` >> log/actions.log
-        python action.py >> log/actions.log && echo >> log/actions.log
-        cp log/actions.log ~/.cache/actions.log
+        echo "============================" >> ghactions.log && echo `date +"%Y-%m-%d %H:%M:%S %A"` >> ghactions.log
+        python action.py >> ghactions.log && echo >> ghactions.log
     # 删除机密
     - name: Secrets Delete
       run: rm -f action*
-    # 发布 log 文件夹下历史记录文件到 log 分支
-    - name: Deploy Log
-      uses: docker://peaceiris/gh-pages:v2
-      env:
-        TZ: Asia/Shanghai
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_BRANCH: log
-        PUBLISH_DIR: ./log
+    # 发布 ghactions.log 历史记录文件到主分支
+    - name: Commit Log
+      run: |
+        git config --global user.email AutoupdateRobot@email.com
+        git config --global user.name AutoupdateRobot
+        git add .
+        git commit -m "Update log" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
-        emptyCommits: false
+        github_token: ${{ secrets.GITHUB_TOKEN }}
