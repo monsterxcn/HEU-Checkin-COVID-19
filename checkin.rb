@@ -3,11 +3,8 @@
 
 require 'watir'
 
-
-
-
-USERNAME = myid
-PASSWORD = mypass
+USERNAME = ENV['SECRET_ID']
+PASSWORD = ENV['SECRET_PASS']
 
 puts '========================='
 browser = Watir::Browser.new :chrome, headless: true
@@ -21,29 +18,29 @@ end
 
 # First login
 login(browser, USERNAME, PASSWORD)
-puts 'Login ehome success...'
+puts '[debug] Login ehome success...'
 
 # Second login
 browser.goto 'https://one.wvpn.hrbeu.edu.cn/infoplus/form/JKXXSB/start'
 login(browser, USERNAME, PASSWORD)
-puts 'Login one success...'
+puts '[debug] Login one success...'
 
 # Wait for loading
 browser.wait_until do |b|
   b.div(id: 'div_loader').style.include?('display: none;')
 end
-puts 'Form loaded...'
+puts '[debug] Form loaded...'
 
 # Select the checkbox
 cb = browser.checkbox(id: 'V1_CTRL82')
 cb.set unless cb.set?
-puts 'Checkbox checked...'
+puts '[debug] Checkbox checked...'
 
 # Submit
 browser.link(text: '确认填报').click
 sleep 5
 browser.button(text: '好').click
-puts 'Submitted'
+puts '[debug] Form Submitted...'
 sleep 5
 browser.button(text: '确定').click
 
@@ -54,9 +51,9 @@ browser.wait_until do |b|
 end
 puts browser.div(id: 'title_content').text
 if browser.div(id: 'title_content').text.include?('已完成')
-  puts 'Checkin Success!'
+  puts '[info] Checkin Success!'
 else
-  puts 'Checkin Fail!'
+  puts '[error] Checkin Fail!'
 end
 puts 'End at ' + Time.now.to_s + '.'
 browser.close

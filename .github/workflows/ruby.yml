@@ -20,13 +20,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    # 缓存历史记录于 ~/.cache/actions.log
-    - name: Log Cache
-      uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-log-${{ hashFiles('**/actions.log') }}
-        restore-keys: ${{ runner.os }}-log-
     - name: Ruby Setup
       uses: actions/setup-ruby@v1
       with:
@@ -37,36 +30,20 @@ jobs:
         wget https://chromedriver.storage.googleapis.com/83.0.4103.39/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip -d /usr/local/bin/
         gem install watir
-    # 获取机密并写入临时文件和脚本
-    - name: Secrets Get
+    # 获取机密，执行签到前复制缓存的 actions.log 并将此次签到记录写入文件后面
+    - name: Action Execute
       env: 
         SECRET_ID: ${{ secrets.SECRET_ID }}
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
-      run: | 
-        cp checkin.rb action.rb
-        echo $SECRET_ID > action-id.txt
-        echo $SECRET_PASS > action-pass.txt
-        sed -i '5 r action-id.txt' action.rb
-        sed -i '6 r action-pass.txt' action.rb
-    # 执行签到前复制缓存的 actions.log 并将此次签到记录写入文件后面
-    - name: Checkin Action
-      env:
-        TZ: Asia/Shanghai
-      run: | 
-        mkdir log
-        if [ -f "vendor/bundle/actions.log" ] ; then cp vendor/bundle/actions.log log/actions.log ; fi
-        ruby action.rb >> log/actions.log && echo >> log/actions.log
-        cp log/actions.log vendor/bundle/actions.log
-    # 删除机密
-    - name: Secrets Delete
-      run: rm -f action*
-    # 发布 log 文件夹下历史记录文件到 log-rb 分支
-    - name: Deploy Log
-      uses: docker://peaceiris/gh-pages:v2
-      env:
-        TZ: Asia/Shanghai
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_BRANCH: log-rb
-        PUBLISH_DIR: ./log
+      run: ruby action.rb >> checkin.log
+    # 发布 checkin.log 历史记录文件到主分支
+    - name: Commit Log
+      run: |
+        git config --global user.email robot@email.com
+        git config --global user.name Robot
+        git add .
+        git commit -m "Update log" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
-        emptyCommits: false
+        github_token: ${{ secrets.GITHUB_TOKEN }}
