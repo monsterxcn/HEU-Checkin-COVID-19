@@ -56,12 +56,12 @@ jobs:
       env:
         TZ: Asia/Shanghai
       run: | 
-        echo "============================" >> ghactions.log && echo `date +"%Y-%m-%d %H:%M:%S %A"` >> ghactions.log
-        python action.py >> ghactions.log && echo >> ghactions.log
+        echo "============================" >> checkin.log && echo `date +"%Y-%m-%d %H:%M:%S %A"` >> checkin.log
+        python action.py >> checkin.log && echo >> checkin.log
     # 删除机密
     - name: Secrets Delete
       run: rm -f action*
-    # 发布 ghactions.log 历史记录文件到主分支
+    # 发布 checkin.log 历史记录文件到主分支
     - name: Commit Log
       run: |
         git config --global user.email AutoupdateRobot@email.com
