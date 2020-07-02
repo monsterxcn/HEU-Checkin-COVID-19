@@ -1,20 +1,9 @@
 ============================
-2020-07-02 07:07:19 Thursday
-Begin to login ...
-CAS response header True
-Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/5624675/render
-Form Status:  SUCCEED
-Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 5556183, 'entryStatus': 0, 'entryRelease': False}]}
-Form Succeed:  SUCCEED
-:.:.:.:.: End this Task :.:.:.:.:
-
+[debug] Begin to login ...
+[debug] CAS response header True
+[debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/5624675/render
+[debug] Form Status:  SUCCEED
+[debug] Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 5556183, 'entryStatus': 0, 'entryRelease': False}]}
+[info] Checkin succeed with jsoncode SUCCEED
+[info] Task Finished at 2020-07-02 07:07:19 Thursday
 ============================
-2020-07-02 09:11:56 Thursday
-Begin to login ...
-CAS response header True
-Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/5625111/render
-Form Status:  SUCCEED
-Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 5556619, 'entryStatus': 0, 'entryRelease': False}]}
-Form Succeed:  SUCCEED
-:.:.:.:.: End this Task :.:.:.:.:
-
