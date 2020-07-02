@@ -35,7 +35,7 @@ jobs:
     - name: Addons Install
       run: pip install lxml requests
     # 获取机密，执行签到并将此次签到记录写入历史记录后面
-    - name: Secrets Get
+    - name: Action Execute
       env: 
         TZ: Asia/Shanghai
         SECRET_ID: ${{ secrets.SECRET_ID }}
@@ -44,13 +44,10 @@ jobs:
         SECRET_DATA: ${{ secrets.SECRET_DATA }}
       run: | 
         python checkin.py >> checkin.log
-    # 删除机密
-    - name: Secrets Delete
-      run: rm -f action*
     # 发布 checkin.log 历史记录文件到主分支
     - name: Commit Log
       run: |
-        git config --global user.email Robot@email.com
+        git config --global user.email robot@email.com
         git config --global user.name Robot
         git add .
         git commit -m "Update log" -a

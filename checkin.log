@@ -7,3 +7,15 @@
 [info] Checkin succeed with jsoncode SUCCEED
 [info] Task Finished at 2020-07-02 07:07:19 Thursday
 ============================
+
+============================
+[debug] Begin to login ...
+[debug] CAS response header True
+[debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/5636078/render
+[debug] Form Status:  EXCEPTION
+[debug] Form stJson:  {'errno': 10000, 'ecode': 'EXCEPTION', 'error': 'java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 2 path $', 'entities': []}
+[error] Checkin error with jsoncode EXCEPTION
+[info] Task Finished at 2020-07-02 21:41:41 Thursday
+============================
+
+
