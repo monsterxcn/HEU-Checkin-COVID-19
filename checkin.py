@@ -116,7 +116,7 @@ try:
         'boundFields': mybound,
         'csrfToken': csrfToken2,
         # formData 修改位置
-        'formData': r'%s' % mydata,
+        'formData': mydata,
         'lang': 'zh',
         'nextUsers': '{}',
         'rand': str(random.random() * 999),
@@ -151,4 +151,4 @@ except:
     msg = '\t脚本报错: \n\n\t' + err + '============================\n'
 finally:
     print('[info] Task Finished at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
-    print('============================\n\n')
+    print('============================\n')
