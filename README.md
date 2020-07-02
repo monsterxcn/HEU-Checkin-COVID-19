@@ -7,6 +7,8 @@
 
 ## 准备
 
+> Ruby 版本需要自行测试，我还没测试成功 www。请切换到 ruby-test 分支查看 Ruby 版代码
+
 签到脚本有两种代码实现：Python by [ZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/) / Ruby by [XYenon](https://gist.github.com/XYenon/79317d63e7f769e5bdff5b595d709b65)，可能需要的数据包括：教务处学生账号、教务处密码、平安行动表单 `BoundFields` 、平安行动表单 `FormData` 。Python 版本四项数据都需要，而 Ruby 版本只需要账号密码。
 
 关于后两项的获取，需要电脑端浏览器 + 一点点使用浏览器的技巧，具体操作可参考《[获取 form Data](https://monsterx.cn/tech/Auto-Checkin-COVID19.html#toc_1)》中的图片：
@@ -18,7 +20,7 @@
 
 获取了这些数据后即可开始部署自己的自动打卡任务，无论你选择下面的哪一种方式，**请在运行前务必修改并核实自己的登录用户、表单数据（、SMTP 发信邮箱）！**
 
-## Server 版（以 Python 为例）
+## Server 版
 
 经过我简单的测试和修改之后，该项目用于服务器部署的完整代码已存放于 Server 目录下。使用前确保使用 `pip install` 安装了 `lxml` `requests` 库。
 
