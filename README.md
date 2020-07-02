@@ -7,7 +7,7 @@
 
 ## 准备
 
-> Ruby 版本需要自行测试，我还没测试成功 www。请切换到 ruby-test 分支查看 Ruby 版代码
+> Ruby 版本需要自行测试，我还没测试成功 >.<，也不知道会不会成功。请切换到 ruby-test 分支查看 Ruby 版草稿代码
 
 签到脚本有两种代码实现：Python by [ZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/) / Ruby by [XYenon](https://gist.github.com/XYenon/79317d63e7f769e5bdff5b595d709b65)，可能需要的数据包括：教务处学生账号、教务处密码、平安行动表单 `BoundFields` 、平安行动表单 `FormData` 。Python 版本四项数据都需要，而 Ruby 版本只需要账号密码。
 
@@ -22,7 +22,11 @@
 
 ## Server 版
 
-经过我简单的测试和修改之后，该项目用于服务器部署的完整代码已存放于 Server 目录下。使用前确保使用 `pip install` 安装了 `lxml` `requests` 库。
+经过我简单的测试和修改之后，该项目用于服务器部署的完整代码已存放于 Server 目录下。
+
+<details><summary>部署参考</summary><br>
+
+使用前确保使用 `pip install` 安装了 `lxml` `requests` 库。
 
 1. 按照自己需要修改文件内容
    
@@ -43,6 +47,8 @@
    
    这个版本通过服务器或本地主机的定时任务实现自动打卡。请参考《[定时任务](https://monsterx.cn/tech/Auto-Checkin-COVID19.html#toc_7)》自行设置定时任务
 
+</details>
+
 ## GitHub Actions 版
 
 为提升广大 HEU 无服务器玩家的体验，本仓库着手实现基于 GitHub Actions 的自动打卡。灵感源自一个使用 GitHub Actions 刷 API 调用次数帮助 Microsoft 365 E5 订阅自动续期的仓库 [wangziyingwen/AutoApiSecret](https://github.com/wangziyingwen/AutoApiSecret) 。
@@ -54,10 +60,10 @@
    
    | Name | Value | Version |
    |:----:|:------|:-------:|
-   | SECRET_ID | myid="2018XXXXXX" | py rb |
-   | SECRET_PASS | mypass="PASSWORD" | py rb |
-   | SECRET_BOUND | mybound='fieldCXXXdqszdjtx,......,fieldMQJCRlxfs' | py |
-   | SECRET_DATA | mydata=r'{"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"}' | py |
+   | SECRET_ID | "2018XXXXXX" | py rb |
+   | SECRET_PASS | "PASSWORD" | py rb |
+   | SECRET_BOUND | 'fieldCXXXdqszdjtx,......,fieldMQJCRlxfs' | py |
+   | SECRET_DATA | '{"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"}' | py |
 
 3. **运行前务必修改并核实自己的登录用户、表单数据！**
 4. 给自己的仓库点个 Star 等待 1 分钟（激活 GitHub Actions）

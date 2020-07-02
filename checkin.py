@@ -8,6 +8,7 @@ Created on 2020-04-13 20:20
 @author: ZhangJiawei & Monst.x
 """
 
+import os
 import requests
 import lxml.html
 import re
@@ -17,10 +18,10 @@ import time
 import smtplib
 import traceback
 
-
-
-
-
+myid = os.environ ['SECRET_ID']
+mypass = os.environ ['SECRET_PASS']
+mybound = os.environ ['SECRET_BOUND']
+mydata = os.environ ['SECRET_DATA']
 
 headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -48,7 +49,7 @@ msg = ""
 try:
     #get
     url_login = 'https://cas.hrbeu.edu.cn/cas/login?service=http%3A%2F%2Fjkgc.hrbeu.edu.cn%2Finfoplus%2Fform%2FJSXNYQSBtest%2Fstart'
-    print("Begin to login ...")
+    print("============================\nBegin to login ...")
     sesh = requests.session()
     req = sesh.get(url_login)
     html_content = req.text
@@ -115,7 +116,7 @@ try:
         'boundFields': mybound,
         'csrfToken': csrfToken2,
         # formData 修改位置
-        'formData': mydata,
+        'formData': r'%s' % mydata,
         'lang': 'zh',
         'nextUsers': '{}',
         'rand': str(random.random() * 999),
@@ -135,11 +136,11 @@ try:
     # print('Form stJsonkey: ', resJson.keys())
 
     if (resJson['errno'] == 0):
-        print('Form Succeed: ', resJson['ecode'])
+        print('[Success] Form Succeed with jsoncode', resJson['ecode'])
         title = f'打卡成功 <{submit_form["stepId"]}>'
         msg = '\t表单地址: ' + form_response.url + '\n\n\t表单状态: \n\t\terrno：' + str(resJson['errno']) + '\n\t\tecode：' + str(resJson['ecode']) + '\n\t\tentities：' + str(resJson['entities']) + '\n\n\n\t完整返回：' + response_end.text
     else:
-        print('Form Error: ', resJson['ecode'])
+        print('[Error] Form Error with jsoncode', resJson['ecode'])
         title = f'打卡失败！校网出错'
         msg = '\t表单地址: ' + form_response.url + '\n\n\t错误信息: \n\t\terrno：' + str(resJson['errno']) + '\n\t\tecode：' + str(resJson['ecode']) + '\n\t\tentities：' + str(resJson['entities']) + '\n\n\n\t完整返回：' + response_end.text
 except:
@@ -147,6 +148,7 @@ except:
     err = traceback.format_exc()
     print('Python Error: \n', err)
     title = '打卡失败！脚本出错'
-    msg = '\t脚本报错: \n\n\t' + err
+    msg = '\t脚本报错: \n\n\t' + err + '============================\n'
 finally:
-    print(':.:.:.:.: End this Task :.:.:.:.:')
+    print('Task Finished at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
+    print('============================\n')
