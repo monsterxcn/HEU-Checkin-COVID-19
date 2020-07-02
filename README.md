@@ -62,13 +62,11 @@
 3. **运行前务必修改并核实自己的登录用户、表单数据！**
 4. 给自己的仓库点个 Star 等待 1 分钟（激活 GitHub Actions）
 5. 查看 GitHub Actions 状态（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/actions)）
-6. 检查打卡执行情况，切换到 `log` 分支查看 time.log 文件
+6. 检查打卡执行情况，查看仓库内新生成的 time.log 文件
 
-Workflow 成功后即可放心睡觉，GitHub Actions Schedule 事件将使打卡任务在每天指定时刻运行（本项目设定时间为 8:00）。你也可以根据自己需要在 .github/workerflows 文件夹下 .yml 文件 Line6 修改打卡执行时间，严格按照 POSIX cron 语法填写，具体说明请参考《[触发工作流程的事件 安排的事件：schedule](https://docs.github.com/cn/actions/reference/events-that-trigger-workflows#)》。务必留意这里使用 Coordinated Universal Time (UTC)，北京时间 2020-06-30 08:00 转换为 UTC 时间是 2020-06-30 0:00。
+检查成功后即可放心睡觉，GitHub Actions `on.schedule` 将使打卡任务在每天指定时刻运行（本项目设定时间为 8:00）。你也可以根据自己需要在 .github/workerflows 文件夹下 .yml 文件 Line11 修改打卡执行时间，严格按照 POSIX cron 语法填写，具体说明请参考《[触发工作流程的事件 安排的事件：schedule](https://docs.github.com/cn/actions/reference/events-that-trigger-workflows#)》。务必留意这里使用 Coordinated Universal Time (UTC)，北京时间 2020-06-30 08:00 转换为 UTC 时间是 2020-06-30 0:00。
 
 > Github Actions 版打卡脚本自身无邮件提醒功能，但是可以从 GitHub Settings 中开启工作流运行提醒邮件，这样省去了 Python SMTP 配置而且更加简洁。点 [这里](https://github.com/settings/notifications) **取消勾选** Send notifications for failed workflows only 即可。
-
-> ~~目前 time.log 日志只能保存最近一次运行记录，等我学会了希望改成记录所有记录~~ time.log 日志已改为记录历次执行结果。
 
 ## 注意
 
