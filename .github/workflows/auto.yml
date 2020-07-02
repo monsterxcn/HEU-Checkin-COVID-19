@@ -1,14 +1,14 @@
 name: Auto Checkin
 
-on: 
+on:
   release:
     types: [published]
   push:
     tags:
-    - 'v*'
+      - "v*"
   #  Coordinated Universal Time (UTC)
   schedule:
-    - cron: '0 23 * * *'
+    - cron: "0 23 * * *"
   watch:
     types: [started]
 
@@ -36,13 +36,13 @@ jobs:
       run: pip install lxml requests
     # 获取机密，执行签到并将此次签到记录写入历史记录后面
     - name: Action Execute
-      env: 
+      env:
         TZ: Asia/Shanghai
         SECRET_ID: ${{ secrets.SECRET_ID }}
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
         SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
         SECRET_DATA: ${{ secrets.SECRET_DATA }}
-      run: | 
+      run: |
         python checkin.py >> checkin.log
     # 发布 checkin.log 历史记录文件到主分支
     - name: Commit Log
