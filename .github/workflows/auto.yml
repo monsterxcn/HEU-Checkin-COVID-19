@@ -34,38 +34,24 @@ jobs:
     # 安装 pip 模块
     - name: Addons Install
       run: pip install lxml requests
-    # 获取机密并写入临时文件和脚本
+    # 获取机密，执行签到并将此次签到记录写入历史记录后面
     - name: Secrets Get
       env: 
+        TZ: Asia/Shanghai
         SECRET_ID: ${{ secrets.SECRET_ID }}
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
         SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
         SECRET_DATA: ${{ secrets.SECRET_DATA }}
       run: | 
-        cp checkin.py action.py
-        echo $SECRET_ID > action-id.txt
-        echo $SECRET_PASS > action-pass.txt
-        echo $SECRET_BOUND > action-bound.txt
-        echo $SECRET_DATA > action-data.txt
-        sed -i '19 r action-id.txt' action.py
-        sed -i '20 r action-pass.txt' action.py
-        sed -i '21 r action-bound.txt' action.py
-        sed -i '22 r action-data.txt' action.py
-    # 执行签到并将此次签到记录写入历史记录后面
-    - name: Checkin Action
-      env:
-        TZ: Asia/Shanghai
-      run: | 
-        echo "============================" >> checkin.log && echo `date +"%Y-%m-%d %H:%M:%S %A"` >> checkin.log
-        python action.py >> checkin.log && echo >> checkin.log
+        python checkin.py >> checkin.log
     # 删除机密
     - name: Secrets Delete
       run: rm -f action*
     # 发布 checkin.log 历史记录文件到主分支
     - name: Commit Log
       run: |
-        git config --global user.email AutoupdateRobot@email.com
-        git config --global user.name AutoupdateRobot
+        git config --global user.email Robot@email.com
+        git config --global user.name Robot
         git add .
         git commit -m "Update log" -a
     - name: Push changes
