@@ -46,7 +46,7 @@ jobs:
         env:
           TZ: Asia/Shanghai
         run: |
-          sudo echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
+          export LANG=zh_CN.UTF-8
           mkdir log
           if [ -f "vendor/bundle/actions.log" ] ; then cp vendor/bundle/actions.log log/actions.log ; fi
           ruby action.rb >> log/actions.log && echo >> log/actions.log
