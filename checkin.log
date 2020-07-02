@@ -18,3 +18,16 @@
 [info] Task Finished at 2020-07-02 22:06:12 Thursday
 ============================
 
+============================
+[debug] Begin to login ...
+
+[error] :.:.:.:.: Except return :.:.:.:.:
+[error] Python Error: 
+ Traceback (most recent call last):
+  File "checkin.py", line 70, in <module>
+    casRes = response302.history[0]
+IndexError: list index out of range
+
+[info] Task Finished at 2020-07-02 22:16:46 Thursday
+============================
+
