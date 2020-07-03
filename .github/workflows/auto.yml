@@ -1,4 +1,4 @@
-name: Auto Checkin
+name: Python Checkin
 
 on:
   release:
@@ -42,15 +42,10 @@ jobs:
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
         SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
         SECRET_DATA: ${{ secrets.SECRET_DATA }}
-      run: |
-        python checkin.py >> checkin.log
+      run: python checkin.py >> checkin.log
     # 发布 checkin.log 历史记录文件到主分支
     - name: Commit Log
-      run: |
-        git config --global user.email robot@email.com
-        git config --global user.name Robot
-        git add .
-        git commit -m "Update log" -a
+      run: git commit -am "Update log" --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
