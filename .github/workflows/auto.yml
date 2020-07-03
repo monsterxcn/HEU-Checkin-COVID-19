@@ -1,0 +1,52 @@
+name: Python Checkin
+
+on:
+  release:
+    types: [published]
+  push:
+    tags:
+      - "v*"
+  #  Coordinated Universal Time (UTC)
+  schedule:
+    - cron: "0 23 * * *"
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # 只有自己点 Star 才触发
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Python Setup
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    # 缓存 pip 模块
+    - name: Pip Cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: ${{ runner.os }}-pip-
+    # 安装 pip 模块
+    - name: Addons Install
+      run: pip install lxml requests
+    # 获取机密，执行签到并将此次签到记录写入历史记录后面
+    - name: Action Execute
+      env:
+        TZ: Asia/Shanghai
+        SECRET_ID: ${{ secrets.SECRET_ID }}
+        SECRET_PASS: ${{ secrets.SECRET_PASS }}
+        SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
+        SECRET_DATA: ${{ secrets.SECRET_DATA }}
+      run: python checkin.py >> checkin.log
+    # 发布 checkin.log 历史记录文件到主分支
+    - name: Commit Log
+      run: git commit -am "Update log" --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
