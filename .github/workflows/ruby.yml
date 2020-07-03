@@ -38,17 +38,17 @@ jobs:
           ruby-version: 2.6.x
       # 为便于 Debug 存留 install.log
       - name: Addons Install
-        run: gem install watir webdrivers > install.log
+        run: gem install watir webdrivers | tee install.log
       # 获取机密，执行签到并将此次签到记录写入历史记录后面
       - name: Action Execute
         env:
           TZ: Asia/Shanghai
           LANG: zh_CN.UTF-8
-          SECRET_ID: ${{ secrets.SECRET_ID }}
-          SECRET_PASS: ${{ secrets.SECRET_PASS }}
+          SECRET_RBID: ${{ secrets.SECRET_RBID }}
+          SECRET_RBPASS: ${{ secrets.SECRET_RBPASS }}
         run: |
-          ruby checkin.rb >> checkin.log
-          echo >> checkin.log
+          ruby checkin.rb | tee -a checkin.log
+          echo | tee -a checkin.log
       # 发布 checkin.log 历史记录文件到 ruby-test 分支
       - name: Commit Log
         run: |
