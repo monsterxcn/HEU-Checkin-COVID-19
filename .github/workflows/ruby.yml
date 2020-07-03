@@ -36,6 +36,12 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.5.x
+      - name: Gem Cache
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
       # 为便于 Debug 存留 install.log
       - name: Addons Install
         run: gem install watir webdrivers | tee install.log
