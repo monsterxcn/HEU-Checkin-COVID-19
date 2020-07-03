@@ -1,0 +1,28 @@
+Successfully installed regexp_parser-1.7.1
+Successfully installed childprocess-3.0.0
+Successfully installed rubyzip-2.3.0
+Successfully installed selenium-webdriver-3.142.7
+Successfully installed watir-6.16.5
+Parsing documentation for regexp_parser-1.7.1
+Installing ri documentation for regexp_parser-1.7.1
+Parsing documentation for childprocess-3.0.0
+Installing ri documentation for childprocess-3.0.0
+Parsing documentation for rubyzip-2.3.0
+Installing ri documentation for rubyzip-2.3.0
+Parsing documentation for selenium-webdriver-3.142.7
+Installing ri documentation for selenium-webdriver-3.142.7
+Parsing documentation for watir-6.16.5
+Installing ri documentation for watir-6.16.5
+Done installing documentation for regexp_parser, childprocess, rubyzip, selenium-webdriver, watir after 4 seconds
+Successfully installed mini_portile2-2.4.0
+Building native extensions. This could take a while...
+Successfully installed nokogiri-1.10.9
+Successfully installed webdrivers-4.4.1
+Parsing documentation for mini_portile2-2.4.0
+Installing ri documentation for mini_portile2-2.4.0
+Parsing documentation for nokogiri-1.10.9
+Installing ri documentation for nokogiri-1.10.9
+Parsing documentation for webdrivers-4.4.1
+Installing ri documentation for webdrivers-4.4.1
+Done installing documentation for mini_portile2, nokogiri, webdrivers after 2 seconds
+8 gems installed
