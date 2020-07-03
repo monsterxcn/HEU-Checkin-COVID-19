@@ -48,9 +48,9 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "github-actions"
-        git commit --amend -am "Update python log"
+        git add checkin-python.log
+        git commit -m "Update python log"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        force: true

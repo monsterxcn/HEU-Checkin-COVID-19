@@ -60,9 +60,9 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "github-actions"
-          git commit --amend -am "Update ruby log"
+          git add checkin-ruby.log
+          git commit -m "Update ruby log"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
