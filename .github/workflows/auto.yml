@@ -45,7 +45,10 @@ jobs:
       run: python checkin.py >> checkin.log
     # 发布 checkin.log 历史记录文件到主分支
     - name: Commit Log
-      run: git commit -am "Update log" --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "gitHub-actions"
+        git commit -am "Update log" --author="github-actions[bot] <22407052+github-actions[bot]@users.noreply.github.com>"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
