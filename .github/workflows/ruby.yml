@@ -35,7 +35,7 @@ jobs:
       - name: Ruby Setup
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.6.x
+          ruby-version: 2.5.x
       # 为便于 Debug 存留 install.log
       - name: Addons Install
         run: gem install watir webdrivers | tee install.log
@@ -44,8 +44,8 @@ jobs:
         env:
           TZ: Asia/Shanghai
           LANG: zh_CN.UTF-8
-          SECRET_RBID: ${{ secrets.SECRET_RBID }}
-          SECRET_RBPASS: ${{ secrets.SECRET_RBPASS }}
+          SECRET_ID: ${{ secrets.SECRET_ID }}
+          SECRET_PASS: ${{ secrets.SECRET_PASS }}
         run: |
           ruby checkin.rb | tee -a checkin.log
           echo | tee -a checkin.log

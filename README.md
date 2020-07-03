@@ -7,7 +7,7 @@
 
 ## 准备
 
-> Ruby 版本需要自行测试，我还没测试成功 >.<，也不知道会不会成功。请切换到 ruby-test 分支查看 Ruby 版草稿代码
+> Ruby 版本需要自行测试，我还没测试成功 >.<，也不知道会不会成功。别人都是在尝试复现错误，只有我在尝试复现成功。切换到 ruby-test 分支查看 Ruby 版测试代码
 
 签到脚本有两种代码实现：Python by [ZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/) / Ruby by [XYenon](https://gist.github.com/XYenon/79317d63e7f769e5bdff5b595d709b65)，可能需要的数据包括：教务处学生账号、教务处密码、平安行动表单 `BoundFields` 、平安行动表单 `FormData` 。Python 版本四项数据都需要，而 Ruby 版本只需要账号密码。
 
