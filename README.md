@@ -3,13 +3,11 @@
 <div align="center">HEU-Checkin-COVID-19</div></br>
 
 
-为 HEU 宅家人士每日平安行动打卡提供便利的小项目，使用前请需要确认自己不会到处瞎跑、不会危害社会~~，会一点点使用浏览器的技巧~~。部署方式说明：Server 版用于部署在服务器或本地，需要自行设置定时任务， GitHub Actions 版完全依赖 GitHub 服务，只需要一个可操作 GitHub 的浏览器。
+为 HEU 宅家人士每日平安行动打卡提供便利的小项目，使用前请需要确认自己不会到处瞎跑、不会危害社会 ~~，会一点点使用浏览器的技巧~~ 。部署方式说明：Server 版用于部署在服务器或本地，需要自行设置定时任务， GitHub Actions 版完全依赖 GitHub 服务，只需要一个可操作 GitHub 的浏览器。
 
 ## 准备
 
-> ~~Ruby 版本需要自行测试，我还没测试成功 >.<，也不知道会不会成功。别人都是在尝试复现错误，只有我在尝试复现成功。切换到 ruby-test 分支查看 Ruby 版测试代码~~
-
-> 喜报，Ruby 代码 GitHub Actions 测试通过。但是由于未知原因目前来看打卡效果不如 Python 稳定，下午的几次测试有打卡连接不稳定的情况，等待进一步测试。~~我选择将锅丢给 GitHub 服务器背，其与校网连接十分缓慢且容易丢失。~~ 在我的一台新加坡服务器上测试连接虽然稍慢但是足够稳定。因此，Ruby 版本打卡暂时不推荐在 GitHub Actions 上使用，建议自行部署于服务器。如果有更好的代码实现 / 工作流写法，欢迎提 issues 或 pr！
+> ~~Ruby 版本需要自行测试，我还没测试成功 >.<，也不知道会不会成功。别人都是在尝试复现错误，只有我在尝试复现成功。切换到 ruby-test 分支查看 Ruby 版测试代码~~ 喜报，Ruby 代码 GitHub Actions 测试通过。
 
 签到脚本有两种代码实现：Python by [ZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/) / Ruby by [XYenon](https://gist.github.com/XYenon/79317d63e7f769e5bdff5b595d709b65)，可能需要的数据包括：教务处学生账号、教务处密码、平安行动表单 `BoundFields` 、平安行动表单 `FormData` 。Python 版本四项数据都需要，而 Ruby 版本只需要账号密码。
 
