@@ -3,11 +3,13 @@
 <div align="center">HEU-Checkin-COVID-19</div></br>
 
 
-这是一个方便 HEU 宅家人士搞定每日平安行动打卡的小项目，使用前你需要确认自己不会到处瞎跑、不会危害社会，会一点点使用浏览器的技巧。实际这个项目部署起来并没有你想的那么麻烦。部署方式有两种：有稳定服务器的可以使用 Server 版，没有也可以通过 GitHub Actions 版实现解放。
+这是一个方便 HEU 宅家人士搞定每日平安行动打卡的小项目，使用前你需要确认自己不会到处瞎跑、不会危害社会，会一点点使用浏览器的技巧。实际这个项目部署起来并没有你想的那么麻烦。部署方式有两种：有稳定服务器可以使用 Server 版，没有的话可以通过 GitHub Actions 版实现解放。
 
 ## 准备
 
-> Ruby 版本需要自行测试，我还没测试成功 >.<，也不知道会不会成功。别人都是在尝试复现错误，只有我在尝试复现成功。切换到 ruby-test 分支查看 Ruby 版测试代码
+> ~~Ruby 版本需要自行测试，我还没测试成功 >.<，也不知道会不会成功。别人都是在尝试复现错误，只有我在尝试复现成功。切换到 ruby-test 分支查看 Ruby 版测试代码~~
+
+> 喜报，GitHub Actions Ruby 代码测试通过。但是由于未知原因效果目前来看打卡效果十分不稳定，下午的几次测试抛开我写的 Workflow file 问题真正成功打卡的也只有两次，等待进一步测试。~~我选择将锅丢给 GitHub 服务器背，其与校网连接十分缓慢且容易丢失。~~ 在我的一台新加坡服务器上测试连接虽然稍慢但是足够稳定。因此，Ruby 版本打卡暂时不推荐在 GitHub Actions 上使用，请自行部署于服务器上。如果有更好的代码实现 / 工作流写法，欢迎提 issues 或 pr！
 
 签到脚本有两种代码实现：Python by [ZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/) / Ruby by [XYenon](https://gist.github.com/XYenon/79317d63e7f769e5bdff5b595d709b65)，可能需要的数据包括：教务处学生账号、教务处密码、平安行动表单 `BoundFields` 、平安行动表单 `FormData` 。Python 版本四项数据都需要，而 Ruby 版本只需要账号密码。
 
@@ -24,7 +26,7 @@
 
 经过我简单的测试和修改之后，该项目用于服务器部署的完整代码已存放于 Server 目录下。
 
-<details><summary>部署参考</summary><br>
+<details><summary>Python 版部署参考</summary><br>
 
 使用前确保使用 `pip install` 安装了 `lxml` `requests` 库。
 
@@ -68,7 +70,7 @@
 3. **运行前务必修改并核实自己的登录用户、表单数据！**
 4. 给自己的仓库点个 Star 等待 1 分钟（激活 GitHub Actions）
 5. 查看 GitHub Actions 状态（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/actions)）
-6. 检查打卡执行情况，查看仓库内新生成的 time.log 文件
+6. 检查打卡执行情况，查看仓库内新生成的 checkin.log 文件
 
 检查成功后 GitHub Actions `on.schedule` 将使打卡任务在每天指定时刻运行（本项目设定时间为 8:00）。你也可以根据自己需要在 .github/workerflows 文件夹下 .yml 文件 Line11 修改打卡执行时间，严格按照 POSIX cron 语法填写，具体说明请参考《[触发工作流程的事件 安排的事件：schedule](https://docs.github.com/cn/actions/reference/events-that-trigger-workflows#)》。务必留意这里使用 Coordinated Universal Time (UTC)，北京时间 2020-06-30 08:00 转换为 UTC 时间是 2020-06-30 0:00。
 
