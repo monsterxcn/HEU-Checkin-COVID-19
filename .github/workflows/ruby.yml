@@ -8,7 +8,7 @@ on:
       - "v*"
   #  Coordinated Universal Time (UTC)
   schedule:
-    - cron: "10 23 * * *"
+    - cron: "15 23 * * *"
   watch:
     types: [started]
 
@@ -29,40 +29,44 @@ jobs:
     # 只有自己点 Star 才触发
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
-      - name: Ruby Setup
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: 2.5.x
-      # 缓存 gem 模块
-      - name: Gem Cache
-        uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: ${{ runner.os }}-gems-
-      # 安装 gem 模块
-      - name: Addons Install
-        run: gem install watir webdrivers
-      # 获取机密，执行签到并将此次签到记录写入历史记录后面
-      - name: Action Execute
-        env:
-          TZ: Asia/Shanghai
-          LANG: zh_CN.UTF-8
-          SECRET_ID: ${{ secrets.SECRET_ID }}
-          SECRET_PASS: ${{ secrets.SECRET_PASS }}
-        run: |
-          ruby checkin.rb | tee -a checkin-ruby.log
-          echo | tee -a checkin-ruby.log
-      # 发布 checkin-ruby.log 记录
-      - name: Commit Log
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "github-actions"
-          git add checkin-ruby.log
-          git commit -m "Update ruby log"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+    # 当 Python 和 Ruby 打卡同时开启时先等待 Python 完成
+    - name: Wait
+      run: sleep 2m
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Ruby Setup
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.5.x
+    # 缓存 gem 模块
+    - name: Gem Cache
+      uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: ${{ runner.os }}-gems-
+    # 安装 gem 模块
+    - name: Addons Install
+      run: gem install watir webdrivers
+    # 获取机密，执行签到并将此次签到记录写入历史记录后面
+    - name: Action Execute
+      env:
+        TZ: Asia/Shanghai
+        LANG: zh_CN.UTF-8
+        SECRET_ID: ${{ secrets.SECRET_ID }}
+        SECRET_PASS: ${{ secrets.SECRET_PASS }}
+      run: |
+        ruby checkin.rb | tee -a checkin-ruby.log
+        echo | tee -a checkin-ruby.log
+    # 发布 checkin-ruby.log 记录
+    - name: Commit Log
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "github-actions"
+        git pull
+        git add checkin-ruby.log
+        git commit -m "Update ruby log"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
