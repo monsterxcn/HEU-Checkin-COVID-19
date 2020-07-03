@@ -4,11 +4,13 @@
 require 'watir'
 require 'webdrivers/chromedriver'
 
-USERNAME = ENV['SECRET_ID'].split('"').last
-PASSWORD = ENV['SECRET_PASS'].split('"').last
+USERNAME = ENV['SECRET_RBID']
+PASSWORD = ENV['SECRET_RBPASS']
 
 puts '========================='
-browser = Watir::Browser.new :chrome, headless: true
+Watir.default_timeout = 180
+args = ['--headless', '--no-sandbox', '--ignore-certificate-errors', '--disable-dev-shm-usage', '--disable-translate', '--window-size=1200x600']
+browser = Watir::Browser.new :chrome, options: {args: args}
 browser.goto 'http://ehome.hrbeu.edu.cn/'
 
 def login(browser, username, password)
@@ -50,12 +52,12 @@ browser.refresh
 browser.wait_until do |b|
   b.div(id: 'div_loader').style.include?('display: none;')
 end
-puts browser.div(id: 'title_content').text
+puts '[debug] ' + browser.div(id: 'title_content').text
 if browser.div(id: 'title_content').text.include?('已完成')
   puts '[info] Checkin Success!'
 else
   puts '[error] Checkin Fail!'
 end
-puts 'End at ' + Time.now.to_s + '.'
+puts '[info] End at ' + Time.now.to_s + '.'
 browser.close
 puts '========================='
