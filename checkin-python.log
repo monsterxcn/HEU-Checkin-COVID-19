@@ -20,19 +20,6 @@
 
 ============================
 [debug] Begin to login ...
-
-[error] :.:.:.:.: Except return :.:.:.:.:
-[error] Python Error: 
- Traceback (most recent call last):
-  File "checkin.py", line 70, in <module>
-    casRes = response302.history[0]
-IndexError: list index out of range
-
-[info] Task Finished at 2020-07-03 00:13:17 Friday
-============================
-
-============================
-[debug] Begin to login ...
 [debug] CAS response header True
 [debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/5649325/render
 [debug] Form Status:  SUCCEED
@@ -49,5 +36,15 @@ IndexError: list index out of range
 [debug] Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 5597325, 'entryStatus': 0, 'entryRelease': False}]}
 [info] Checkin succeed with jsoncode SUCCEED
 [info] Task Finished at 2020-07-03 20:14:06 Friday
+============================
+
+============================
+[debug] Begin to login ...
+[debug] CAS response header True
+[debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/5665827/render
+[debug] Form Status:  SUCCEED
+[debug] Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 5597335, 'entryStatus': 0, 'entryRelease': False}]}
+[info] Checkin succeed with jsoncode SUCCEED
+[info] Task Finished at 2020-07-03 20:24:57 Friday
 ============================
 

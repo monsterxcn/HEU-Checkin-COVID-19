@@ -42,13 +42,13 @@ jobs:
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
         SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
         SECRET_DATA: ${{ secrets.SECRET_DATA }}
-      run: python checkin.py | tee -a checkin.log
-    # 发布 checkin.log 历史记录文件到主分支
+      run: python checkin.py | tee -a checkin-python.log
+    # 发布 checkin-python.log 记录
     - name: Commit Log
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "github-actions"
-        git commit -am "Update python log"
+        git commit --amend -am "Update python log"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
