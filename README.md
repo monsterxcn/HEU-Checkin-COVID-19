@@ -83,10 +83,11 @@
    | SECRET_BOUND | fieldCXXXdqszdjtx,......,fieldMQJCRlxfs | py |
    | SECRET_DATA | {"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"} | py |
 
-3. **运行前务必修改并核实自己的登录用户、表单数据！**
-4. 给自己的仓库点个 Star 等待 1 分钟（激活 GitHub Actions）
-5. 查看 GitHub Actions 状态（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/actions)）
-6. 检查打卡执行情况，查看仓库内新生成的 checkin.log 文件
+3. 禁用 .github/workerflows 文件夹下不需要的一个 .yml 文件（修改 yml 后缀或直接删除）
+4. **运行前务必修改并核实自己的登录用户、表单数据！**
+5. 给自己的仓库点个 Star 等待 1 分钟（激活 GitHub Actions）
+6. 查看 GitHub Actions 状态（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/actions)）
+7. 查看仓库内新生成的 checkin.log 文件检查打卡执行情况
 
 检查成功后 GitHub Actions `on.schedule` 将使打卡任务在每天指定时刻运行（本项目设定时间为 7:00）。你可以根据自己需要在 .github/workerflows 文件夹下 .yml 文件 Line11 修改打卡执行时间，严格按照 POSIX cron 语法填写，具体说明请参考《[触发工作流程的事件 安排的事件：schedule](https://docs.github.com/cn/actions/reference/events-that-trigger-workflows#)》。务必留意这里使用 Coordinated Universal Time (UTC)，北京时间 2020-06-30 07:00 转换为 UTC 时间是 2020-06-29 23:00。
 
