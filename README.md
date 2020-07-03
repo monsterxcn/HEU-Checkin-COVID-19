@@ -56,28 +56,27 @@
 部署 GitHub Actions 前你需要确认自己选择的脚本说明：
 
 1. Fork 本仓库
-2. 在仓库的 Settings 中添加 Secrets（在 [这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/settings/secrets) 按代码版本需要添加）
+2. 在仓库的 Settings 中添加 Secrets（在 [这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/settings/secrets) 按代码版本需要添加，**注意不需要加引号** ）
    
    | Name | Value | Version |
    |:----:|:------|:-------:|
-   | SECRET_ID | "2018XXXXXX" | py rb |
-   | SECRET_PASS | "PASSWORD" | py rb |
-   | SECRET_BOUND | 'fieldCXXXdqszdjtx,......,fieldMQJCRlxfs' | py |
-   | SECRET_DATA | '{"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"}' | py |
+   | SECRET_ID | 2018XXXXXX | py rb |
+   | SECRET_PASS | PASSWORD | py rb |
+   | SECRET_BOUND | fieldCXXXdqszdjtx,......,fieldMQJCRlxfs | py |
+   | SECRET_DATA | {"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"} | py |
 
 3. **运行前务必修改并核实自己的登录用户、表单数据！**
 4. 给自己的仓库点个 Star 等待 1 分钟（激活 GitHub Actions）
 5. 查看 GitHub Actions 状态（[这里](https://github.com/monsterxcn/HEU-Checkin-COVID-19/actions)）
 6. 检查打卡执行情况，查看仓库内新生成的 time.log 文件
 
-检查成功后即可放心睡觉，GitHub Actions `on.schedule` 将使打卡任务在每天指定时刻运行（本项目设定时间为 8:00）。你也可以根据自己需要在 .github/workerflows 文件夹下 .yml 文件 Line11 修改打卡执行时间，严格按照 POSIX cron 语法填写，具体说明请参考《[触发工作流程的事件 安排的事件：schedule](https://docs.github.com/cn/actions/reference/events-that-trigger-workflows#)》。务必留意这里使用 Coordinated Universal Time (UTC)，北京时间 2020-06-30 08:00 转换为 UTC 时间是 2020-06-30 0:00。
+检查成功后 GitHub Actions `on.schedule` 将使打卡任务在每天指定时刻运行（本项目设定时间为 8:00）。你也可以根据自己需要在 .github/workerflows 文件夹下 .yml 文件 Line11 修改打卡执行时间，严格按照 POSIX cron 语法填写，具体说明请参考《[触发工作流程的事件 安排的事件：schedule](https://docs.github.com/cn/actions/reference/events-that-trigger-workflows#)》。务必留意这里使用 Coordinated Universal Time (UTC)，北京时间 2020-06-30 08:00 转换为 UTC 时间是 2020-06-30 0:00。
 
 > Github Actions 版打卡脚本自身无邮件提醒功能，但是可以从 GitHub Settings 中开启工作流运行提醒邮件，这样省去了 Python SMTP 配置而且更加简洁。点 [这里](https://github.com/settings/notifications) **取消勾选** Send notifications for failed workflows only 即可。
 
 ## 注意
 
  - 本项目使用的 Python 版本为 3.x。已知 Python 2.x 会出现错误，不予修复
- - GitHub 有一定限制
  - 如需要停止 GitHub Action 每日自动打卡，请删除仓库或删除 .github/workerflows 文件夹下 .yml 文件
  - 使用本项目因操作不当导致的平安行动打卡错误责任自负（比如你不检查表单数据提交了别的同学的数据到自己的平安行动中）
  - 如果你确实啥也不会，那么我推荐你使用 [腐败街](https://www.fubaijie.cn) 提供的定时打卡功能
