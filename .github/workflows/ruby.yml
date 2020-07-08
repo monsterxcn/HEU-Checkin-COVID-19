@@ -63,8 +63,7 @@ jobs:
         # 如果不需要微信推送请使用下面这一行 
         # ruby checkin.rb | tee -a checkin-ruby.log
         curl -d "text=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") && echo && echo ' - 运行记录：run.log' && echo && echo '--------------' && echo && echo '`run.log`' && echo &&  echo '```' && ruby checkin.rb | tee -a checkin-ruby.log && echo && echo '```' && echo)" $(echo $SECRET_WECHAT)
-        echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") | tee -a checkin-ruby.log
-        echo | tee -a checkin-ruby.log
+        (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a checkin-ruby.log
     # 发布 checkin-ruby.log 记录
     - name: Commit Log
       run: |
