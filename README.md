@@ -9,7 +9,9 @@
 
 > ~~Ruby 版本需要自行测试，我还没测试成功 >.<，也不知道会不会成功。别人都是在尝试复现错误，只有我在尝试复现成功。切换到 ruby-test 分支查看 Ruby 版测试代码~~ 喜报，Ruby 代码 GitHub Actions 测试通过。
 
-签到脚本有两种代码实现：Python by [ZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/) / Ruby by [XYenon](https://gist.github.com/XYenon/79317d63e7f769e5bdff5b595d709b65)，可能需要的数据包括：教务处学生账号、教务处密码、平安行动表单 `BoundFields` 、平安行动表单 `FormData` 。Python 版本四项数据都需要，而 Ruby 版本只需要账号密码。
+签到脚本有两种代码实现：Python by [ZJW](https://zjw1.top/2020/03/10/auto_checkin_during_covid19_and_cas_sso_learning/) / Ruby by [XYenon](https://gist.github.com/XYenon/79317d63e7f769e5bdff5b595d709b65)，可能需要的数据包括：教务处学生账号、教务处密码、平安行动表单 `BoundFields` 、平安行动表单 `FormData` 。
+
+**Python 版本四项数据都需要，而 Ruby 版本只需要账号密码。**
 
 关于后两项的获取，需要电脑端浏览器 + 一点点使用浏览器的技巧，具体操作可参考《[获取 form Data](https://monsterx.cn/tech/Auto-Checkin-COVID19.html#toc_1)》中的图片：
 
@@ -60,7 +62,7 @@
    命令行执行 `gem install watir webdrivers`
 
 3. 部分场景可能需要另行安装 chromedriver、 google-chrome 等
-4. **运行前务必修改并核实自己的登录用户、表单数据、SMTP 发信邮箱！**
+4. **运行前务必修改并核实自己的登录用户！**
 5. 配置打卡定时任务
    
    Server 版本通过服务器或本地主机的定时任务实现自动打卡。请参考《[定时任务](https://monsterx.cn/tech/Auto-Checkin-COVID19.html#toc_7)》自行设置定时任务
@@ -80,8 +82,11 @@
    |:----:|:------|:-------:|
    | SECRET_ID | 2020XXXXXX | py rb |
    | SECRET_PASS | PASSWORD | py rb |
+   | SECRET_WECHAT | https://sc.ftqq.com/SCU2785xxxxxxxxxxxxxxxxxxxxxxxad.send | py rb |
    | SECRET_BOUND | fieldCXXXdqszdjtx,......,fieldMQJCRlxfs | py |
    | SECRET_DATA | {"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXX学院",......,"_VAR_ENTRY_TAGS":"生活服务"} | py |
+
+   新增一项 `SECRET_WECHAT` 用于部署 [Server 酱](http://sc.ftqq.com/?c=code) 微信打卡状态推送，有能力者自行参考当前工作流和 ruby-test 下脚本部署
 
 3. 禁用 .github/workerflows 文件夹下不需要的一个 .yml 文件（修改 yml 后缀或直接删除）
 4. **运行前务必修改并核实自己的登录用户、表单数据！**
@@ -99,4 +104,4 @@
  - 如需要停止 GitHub Action 每日自动打卡，请删除仓库或删除 .github/workerflows 文件夹下 .yml 文件
  - 使用本项目因操作不当导致的平安行动打卡错误责任自负（比如你不检查表单数据提交了别的同学的数据到自己的平安行动中）
  - 如果不善动手，那么我推荐使用 [腐败街](https://www.fubaijie.cn) 提供的定时打卡
- - Licence & Author: [ZJW](https://zjw1.top) | [XYenon](https://xyenon.bid) | MIT @ [Monst.x](https://monsterx.cn)
+ - Author: [ZJW](https://zjw1.top) | [XYenon](https://xyenon.bid) | [Monst.x](https://monsterx.cn)

@@ -31,9 +31,12 @@ jobs:
     steps:
     # 当 Python 和 Ruby 打卡同时开启时先等待 Python 完成
     - name: Wait
-      run: sleep 2m
+      run: sleep 20s
     - name: Checkout
       uses: actions/checkout@master
+      # 下面两行为作者自用， Fork 后请删除下面两行
+      with:
+        ref: ruby-test
     - name: Ruby Setup
       uses: actions/setup-ruby@v1
       with:
@@ -55,8 +58,11 @@ jobs:
         LANG: zh_CN.UTF-8
         SECRET_ID: ${{ secrets.SECRET_ID }}
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
+        SECRET_WECHAT: ${{ secrets.SECRET_WECHAT }}
       run: |
-        ruby checkin.rb | tee -a checkin-ruby.log
+        # 如果不需要微信推送请使用下面这一行 
+        # ruby checkin.rb | tee -a checkin-ruby.log
+        curl -d "text=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") && echo && echo ' - 运行记录：run.log' && echo && echo '--------------' && echo && echo '`run.log`' && echo &&  echo '```' && ruby checkin.rb | tee -a checkin-ruby.log && echo && echo '```' && echo)" $(echo $SECRET_WECHAT)
         echo | tee -a checkin-ruby.log
     # 发布 checkin-ruby.log 记录
     - name: Commit Log
@@ -68,5 +74,7 @@ jobs:
         git commit -m "Update ruby log"
     - name: Push changes
       uses: ad-m/github-push-action@master
+      # 最后一行为作者自用， Fork 后请删除最后一行
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ruby-test
