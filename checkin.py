@@ -22,6 +22,9 @@ myid = os.environ ['SECRET_ID']
 mypass = os.environ ['SECRET_PASS']
 mybound = os.environ ['SECRET_BOUND']
 mydata = os.environ ['SECRET_DATA']
+# like this "https://sc.ftqq.com/SCU2785T94c7702e7cxxxxxxxxxxxxxxxxxxxxxxx2778884fad.send"
+# Get this from http://sc.ftqq.com/?c=code
+wechatapi = os.environ ['SECRET_WECHAT']
 
 headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -45,11 +48,15 @@ def findStr(source, target):
     return source.find(target) != -1
 title = ""
 msg = ""
+endlink = ""
+runinfo = '\n' + """ - 签到账号：""" + myid + '\n' + """ - 开始签到：""" + time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()) + '\n'
+runlog = """"""
 
 try:
     #get
     url_login = 'https://cas.hrbeu.edu.cn/cas/login?service=http%3A%2F%2Fjkgc.hrbeu.edu.cn%2Finfoplus%2Fform%2FJSXNYQSBtest%2Fstart'
     print("============================\n[debug] Begin to login ...")
+    runlog += """[debug] Begin to login ..."""+ '\n'
     sesh = requests.session()
     req = sesh.get(url_login)
     html_content = req.text
@@ -69,6 +76,7 @@ try:
     response302 = sesh.post(req.url, data=user_form, headers=headers)
     casRes = response302.history[0]
     print("[debug] CAS response header", findStr(casRes.headers['Set-Cookie'],'CASTGC'))
+    runlog += """[debug] CAS response header """ + str(findStr(casRes.headers['Set-Cookie'],'CASTGC')) + '\n'
 
     #get
     jkgc_response = sesh.get(response302.url)
@@ -134,21 +142,43 @@ try:
     print('[debug] Form stJson: ', resJson)
     # 获取表单返回 Json 数据所有 key 用这个
     # print('Form stJsonkey: ', resJson.keys())
+    endlink = form_response.url
+    runlog += "[debug] Form url: " + form_response.url + '\n' + "[debug] Form Status: " + resJson['ecode'] + '\n' + "[debug] Form Json: " + str(resJson) + '\n'
 
     if (resJson['errno'] == 0):
         print('[info] Checkin succeed with jsoncode', resJson['ecode'])
+        runlog += "[info] Checkin succeed with jsoncode " + resJson['ecode'] + '\n'
         title = f'打卡成功 <{submit_form["stepId"]}>'
         msg = '\t表单地址: ' + form_response.url + '\n\n\t表单状态: \n\t\terrno：' + str(resJson['errno']) + '\n\t\tecode：' + str(resJson['ecode']) + '\n\t\tentities：' + str(resJson['entities']) + '\n\n\n\t完整返回：' + response_end.text
     else:
         print('[error] Checkin error with jsoncode', resJson['ecode'])
+        runlog += "[error] Checkin error with jsoncode " + resJson['ecode'] + '\n'
         title = f'打卡失败！校网出错'
         msg = '\t表单地址: ' + form_response.url + '\n\n\t错误信息: \n\t\terrno：' + str(resJson['errno']) + '\n\t\tecode：' + str(resJson['ecode']) + '\n\t\tentities：' + str(resJson['entities']) + '\n\n\n\t完整返回：' + response_end.text
 except:
+    endlink = "Not Found."
     print('\n[error] :.:.:.:.: Except return :.:.:.:.:')
+    runlog += """[error] Except return"""+ '\n'
     err = traceback.format_exc()
     print('[error] Python Error: \n', err)
+    runlog += """[error] Python Error: """ + err + '\n'
     title = '打卡失败！脚本出错'
     msg = '\t脚本报错: \n\n\t' + err + '============================\n'
 finally:
     print('[info] Task Finished at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
+
+    # Server 酱微信推送
+    runinfo += """ - 结束签到：""" + time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()) + '\n' + """ - 签到状态：""" + title + '\n' + """ - 签到地址：""" + endlink + '\n'
+    content = '\n' + runinfo + '\n' + """ - 运行记录：run.log""" + '\n' + '\n' + '\n' + """------------------
+
+`run.log`
+
+
+```
+""" + runlog + """
+```
+"""
+    wechatdata = {"text":title,"desp":content}
+    requests.post(wechatapi, data = wechatdata)
+    print('[info] Log Sent at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
     print('============================\n')
