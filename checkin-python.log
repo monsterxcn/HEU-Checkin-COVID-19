@@ -529,3 +529,14 @@
 [info] Log Sent at 2020-08-16 07:12:19 Sunday
 ============================
 
+============================
+[debug] Begin to login ...
+[debug] CAS response header True
+[debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/6792806/render
+[debug] Form Status:  SUCCEED
+[debug] Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 6724314, 'entryStatus': 0, 'entryRelease': False}]}
+[info] Checkin succeed with jsoncode SUCCEED
+[info] Task Finished at 2020-08-17 07:12:24 Monday
+[info] Log Sent at 2020-08-17 07:12:27 Monday
+============================
+
