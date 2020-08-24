@@ -1,11 +1,6 @@
 name: Python Checkin
 
 on:
-  release:
-    types: [published]
-  push:
-    tags:
-      - "v*"
   #  Coordinated Universal Time (UTC)
   schedule:
     - cron: "0 23 * * *"
@@ -13,7 +8,7 @@ on:
     types: [started]
 
 jobs:
-  build:
+  checkin-python:
     runs-on: ubuntu-latest
     # 只有自己点 Star 才触发
     if: github.event.repository.owner.id == github.event.sender.id
@@ -45,7 +40,7 @@ jobs:
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
         SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
         SECRET_DATA: ${{ secrets.SECRET_DATA }}
-        SECRET_WECHAT: ${{ secrets.SECRET_WECHAT }}
+        SECRET_WECHAT: ${{ secrets.SECRET_WCMSG }}
       run: python checkin.py | tee -a checkin-python.log
     # 发布 checkin-python.log 记录
     - name: Commit Log
