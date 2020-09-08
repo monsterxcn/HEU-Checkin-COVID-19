@@ -4,20 +4,17 @@ on:
   #  Coordinated Universal Time (UTC)
   schedule:
     - cron: "0 23 * * *"
-  watch:
-    types: [started]
+  workflow_dispatch:
 
 jobs:
   checkin-python:
     runs-on: ubuntu-latest
-    # 只有自己点 Star 才触发
-    if: github.event.repository.owner.id == github.event.sender.id
     steps:
     - name: Checkout
       uses: actions/checkout@master
       # 下面两行为作者自用， Fork 后请删除下面两行
       with:
-        ref: ruby-test
+        ref: personal
     - name: Python Setup
       uses: actions/setup-python@v1
       with:
@@ -40,13 +37,13 @@ jobs:
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
         SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
         SECRET_DATA: ${{ secrets.SECRET_DATA }}
-        SECRET_WECHAT: ${{ secrets.SECRET_WCMSG }}
+        SECRET_WECHAT: ${{ secrets.SECRET_WECHAT }}
       run: python checkin.py | tee -a checkin-python.log
     # 发布 checkin-python.log 记录
     - name: Commit Log
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "github-actions"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git add checkin-python.log
         git commit -m "Update python log"
     - name: Push changes
@@ -54,4 +51,4 @@ jobs:
       # 最后一行为作者自用， Fork 后请删除最后一行
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ruby-test
+        branch: personal

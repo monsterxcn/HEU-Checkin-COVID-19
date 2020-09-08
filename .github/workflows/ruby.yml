@@ -1,15 +1,16 @@
 name: Ruby Checkin
 
 on:
-  #  Coordinated Universal Time (UTC)
+  # 两个工作流同时开启时等待 Python 完成提交后再开始
+  # 否则由于仓库变动会导致 log 文件提交失败
+  # Coordinated Universal Time (UTC)
   # schedule:
   #   - cron: "15 23 * * *"
-  # watch:
-  #   types: [started]
-  workflow_run:
-    workflows: ["Python Checkin"]
-    types: 
-      - completed
+  # workflow_run:
+  #   workflows: ["Python Checkin"]
+  #   types: 
+  #     - completed
+  workflow_dispatch:
 
 jobs:
   checkin-ruby:
@@ -25,14 +26,12 @@ jobs:
         env:
           HUB_HOST: localhost
           HUB_PORT: 9515
-    # 只有自己点 Star 才触发
-    if: github.event.repository.owner.id == github.event.sender.id
     steps:
     - name: Checkout
       uses: actions/checkout@master
       # 下面两行为作者自用， Fork 后请删除下面两行
       with:
-        ref: ruby-test
+        ref: personal
     - name: Ruby Setup
       uses: actions/setup-ruby@v1
       with:
@@ -54,17 +53,17 @@ jobs:
         LANG: zh_CN.UTF-8
         SECRET_ID: ${{ secrets.SECRET_ID }}
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
-        SECRET_WECHAT: ${{ secrets.SECRET_WCMSG }}
+        SECRET_WECHAT: ${{ secrets.SECRET_WECHAT }}
       run: |
         # 如果不需要微信推送请使用下面这一行 
         # ruby checkin.rb | tee -a checkin-ruby.log
-        curl -d "title=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") && echo && echo ' - 运行记录：run.log' && echo && echo '--------------' && echo && echo '`run.log`' && echo &&  echo '```' && ruby checkin.rb | tee -a checkin-ruby.log && echo && echo '```' && echo)" $(echo $SECRET_WECHAT)
+        curl -d "text=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") && echo && echo ' - 运行记录：run.log' && echo && echo '--------------' && echo && echo '`run.log`' && echo &&  echo '```' && ruby checkin.rb | tee -a checkin-ruby.log && echo && echo '```' && echo)" $(echo $SECRET_WECHAT)
         (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a checkin-ruby.log
     # 发布 checkin-ruby.log 记录
     - name: Commit Log
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "github-actions"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git pull
         git add checkin-ruby.log
         git commit -m "Update ruby log"
@@ -73,4 +72,4 @@ jobs:
       # 最后一行为作者自用， Fork 后请删除最后一行
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ruby-test
+        branch: personal
