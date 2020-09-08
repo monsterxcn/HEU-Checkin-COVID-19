@@ -178,7 +178,7 @@ finally:
 """ + runlog + """
 ```
 """
-    wechatdata = {"title":title,"desp":content}
+    wechatdata = {"text":title,"desp":content}
     requests.post(wechatapi, data = wechatdata)
     print('[info] Log Sent at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
     print('============================\n')
