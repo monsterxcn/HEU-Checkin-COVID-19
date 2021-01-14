@@ -1,6 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+###
+# 平安行动自动打卡
+# 
+# Created on 2020-07-04 07:07
+# @author: XYenon & Monst.x
+###
+
 require 'watir'
 require 'webdrivers/chromedriver'
 

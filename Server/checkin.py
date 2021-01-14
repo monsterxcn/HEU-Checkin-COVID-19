@@ -8,7 +8,7 @@
 
     pip install lxml requests
 
-然后修改行 26-29 为自己的数据，并注意配置行 167-174 的 SMTP 发信
+然后修改 26-29 行为自己的数据，如有需要请自行配置 161-184 行的 SMTP 发信
 
 Created on 2020-04-13 20:20
 @author: ZhangJiawei & Monst.x
@@ -156,35 +156,32 @@ except:
     msg = '\t脚本报错: \n\n\t' + err + '============================\n'
 finally:
     print(':.:.:.:.: Finally :.:.:.:.:')
+
     ## 发送邮件
-    # import sendmail     ## 这个是普通.py文件，不是Python库
-    # sendmail.sendmail(title, msg)
-
-    from email.mime.text import MIMEText
-    from email.header import Header
-
-    # 第三方 SMTP 服务
-    mail_host="smtp.exmail.qq.com"                 # 设置 smtp 服务器
-    mail_user="example@example.com"                # smtp 发信邮箱用户名
-    mail_pass="emailpassword"                      # smtp 发信邮箱密码
-    sender = '1@example.com'                       # 发信邮箱显示
-    receivers = ['2@example.com']                  # 修改为收件人邮箱，多邮箱以数组形式写
-    message = MIMEText(msg, 'plain', 'utf-8')
-    message['From'] = Header("1@example.com", 'utf-8')        # 发件人邮箱
-    message['To'] =  Header("2@example.com", 'utf-8')         # 收件人邮箱
-    subject = title
-    message['Subject'] = Header(subject, 'utf-8')
-    try:
-        # smtpObj = smtplib.SMTP()              # 使用一般发信
-        # smtpObj.connect(mail_host, 25)        # 不加密时 SMTP 端口号为 25
-        # smtpObj = smtplib.SMTP_SSL()          # Python 3.7 以下版本 SSL 加密发信
-        smtpObj = smtplib.SMTP_SSL(mail_host)   # Python 3.7 及以上版本 SSL 加密发信
-        smtpObj.connect(mail_host, 465)         # 加密时 SMTP 端口号为 465
-        smtpObj.login(mail_user,mail_pass)
-        smtpObj.sendmail(sender, receivers, message.as_string())
-        print ("[info] Success: The email was sent successfully")
-    except smtplib.SMTPException:
-        print ("[error] Error: Can not send mail")
+    # from email.mime.text import MIMEText
+    # from email.header import Header
+    # # 第三方 SMTP 服务
+    # mail_host="smtp.exmail.qq.com"                 # 设置 smtp 服务器
+    # mail_user="example@example.com"                # smtp 发信邮箱用户名
+    # mail_pass="emailpassword"                      # smtp 发信邮箱密码
+    # sender = '1@example.com'                       # 发信邮箱显示
+    # receivers = ['2@example.com']                  # 修改为收件人邮箱，多邮箱以数组形式写
+    # message = MIMEText(msg, 'plain', 'utf-8')
+    # message['From'] = Header("1@example.com", 'utf-8')        # 发件人邮箱
+    # message['To'] =  Header("2@example.com", 'utf-8')         # 收件人邮箱
+    # subject = title
+    # message['Subject'] = Header(subject, 'utf-8')
+    # try:
+    #     # smtpObj = smtplib.SMTP()              # 使用一般发信
+    #     # smtpObj.connect(mail_host, 25)        # 不加密时 SMTP 端口号为 25
+    #     # smtpObj = smtplib.SMTP_SSL()          # Python 3.7 以下版本 SSL 加密发信
+    #     smtpObj = smtplib.SMTP_SSL(mail_host)   # Python 3.7 及以上版本 SSL 加密发信
+    #     smtpObj.connect(mail_host, 465)         # 加密时 SMTP 端口号为 465
+    #     smtpObj.login(mail_user,mail_pass)
+    #     smtpObj.sendmail(sender, receivers, message.as_string())
+    #     print ("[info] Success: The email was sent successfully")
+    # except smtplib.SMTPException:
+    #     print ("[error] Error: Can not send mail")
     
     print('[info] Task Finished at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
     print('============================\n')

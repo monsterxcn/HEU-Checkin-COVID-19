@@ -1,13 +1,13 @@
-name: Ruby Checkin
+name: Ruby 打卡
 
 on:
   # 两个工作流同时开启时等待 Python 完成提交后再开始
   # 否则由于仓库变动会导致 log 文件提交失败
   # Coordinated Universal Time (UTC)
   # schedule:
-  #   - cron: "15 23 * * *"
+  #   - cron: "20 0,1,23 * * *"
   # workflow_run:
-  #   workflows: ["Python Checkin"]
+  #   workflows: ["Python 打卡"]
   #   types: 
   #     - completed
   workflow_dispatch:
@@ -29,25 +29,19 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-      # 下面两行为作者自用， Fork 后请删除下面两行
-      with:
-        ref: personal
-    - name: Ruby Setup
+    - name: Setup
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.5.x
-    # 缓存 gem 模块
-    - name: Gem Cache
+    - name: Cache
       uses: actions/cache@v2
       with:
         path: vendor/bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: ${{ runner.os }}-gems-
-    # 安装 gem 模块
-    - name: Addons Install
+    - name: Install
       run: gem install watir webdrivers
-    # 获取机密，执行签到并将此次签到记录写入历史记录后面
-    - name: Action Execute
+    - name: Execute
       env:
         TZ: Asia/Shanghai
         LANG: zh_CN.UTF-8
@@ -56,20 +50,29 @@ jobs:
         SECRET_WECHAT: ${{ secrets.SECRET_WECHAT }}
       run: |
         # 如果不需要微信推送请使用下面这一行 
-        # ruby checkin.rb | tee -a checkin-ruby.log
-        curl -d "text=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") && echo && echo ' - 运行记录：run.log' && echo && echo '--------------' && echo && echo '`run.log`' && echo &&  echo '```' && ruby checkin.rb | tee -a checkin-ruby.log && echo && echo '```' && echo)" $(echo $SECRET_WECHAT)
-        (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a checkin-ruby.log
-    # 发布 checkin-ruby.log 记录
-    - name: Commit Log
+        # ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log
+        curl -d "text=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) \
+          && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") \
+          && echo && echo ' - 运行记录：run.log' \
+          && echo && echo '--------------' \
+          && echo && echo '`run.log`' \
+          && echo && echo '```' && ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log \
+          && echo && echo '```' && echo)" \
+          $(echo $SECRET_WECHAT)
+        (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a Logs/checkin-ruby.log
+    - name: Commit
+      env:
+        TZ: Asia/Shanghai
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git pull
-        git add checkin-ruby.log
-        git commit -m "Update ruby log"
-    - name: Push changes
+        git add Logs/checkin-ruby.log
+        git commit -m \
+          "Update ruby log at \
+          $(date +"%Y-%m-%d %H:%M") \
+          "
+    - name: Push
       uses: ad-m/github-push-action@master
-      # 最后一行为作者自用， Fork 后请删除最后一行
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: personal
