@@ -598,3 +598,36 @@ requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetErro
 [info] Task Finished at 2021-01-16 10:45:38 Saturday
 ============================
 
+============================
+[debug] Begin to login ...
+[debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/7910239/render
+[debug] Form Status:  SUCCEED
+[debug] Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 7841748, 'entryStatus': 0, 'entryRelease': False}]}
+[info] Checkin succeed with jsoncode SUCCEED
+:.:.:.:.: Finally :.:.:.:.:
+[info] Notification sended at 2021-01-17 07:27:29 Sunday
+[info] Task Finished at 2021-01-17 07:27:29 Sunday
+============================
+
+============================
+[debug] Begin to login ...
+[debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/7917560/render
+[debug] Form Status:  SUCCEED
+[debug] Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 7849069, 'entryStatus': 0, 'entryRelease': False}]}
+[info] Checkin succeed with jsoncode SUCCEED
+:.:.:.:.: Finally :.:.:.:.:
+[info] Notification sended at 2021-01-17 08:38:28 Sunday
+[info] Task Finished at 2021-01-17 08:38:28 Sunday
+============================
+
+============================
+[debug] Begin to login ...
+[debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/7932382/render
+[debug] Form Status:  SUCCEED
+[debug] Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 7863891, 'entryStatus': 0, 'entryRelease': False}]}
+[info] Checkin succeed with jsoncode SUCCEED
+:.:.:.:.: Finally :.:.:.:.:
+[info] Notification sended at 2021-01-17 10:36:30 Sunday
+[info] Task Finished at 2021-01-17 10:36:30 Sunday
+============================
+
