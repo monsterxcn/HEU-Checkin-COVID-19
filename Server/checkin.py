@@ -148,27 +148,27 @@ if __name__ == '__main__':
         ## 发送邮件
         # from email.mime.text import MIMEText
         # from email.header import Header
-        # mail_host = "smtp.exmail.qq.com"                 # 设置 smtp 服务器
-        # mail_user = "example@example.com"                # smtp 发信邮箱用户名
-        # mail_pass = "emailpassword"                      # smtp 发信邮箱密码
-        # sender = '1@example.com'                         # 发信邮箱显示
-        # receivers = ['2@example.com']                    # 修改为收件人邮箱，多邮箱以数组形式写
+        # mail_host = "smtp.qq.com"                      # SMTP 服务器地址
+        # mail_user = "sender@example.com"               # SMTP 发信邮箱用户名
+        # mail_pass = "emailpassword"                    # SMTP 发信邮箱密码
+        # sender = 'sender@example.com'                  # 发信人邮箱，即 SMTP 发信邮箱用户名
+        # receivers = ['receiver@example.com']           # 收信人邮箱，多邮箱以数组形式写
         # message = MIMEText(msg, 'plain', 'utf-8')
-        # message['From'] = Header("1@example.com", 'utf-8')        # 发件人邮箱
-        # message['To'] =  Header("2@example.com", 'utf-8')         # 收件人邮箱
+        # message['From'] = Header("1@example.com", 'utf-8')        # 发信人邮箱，仅用于显示
+        # message['To'] =  Header("2@example.com", 'utf-8')         # 收信人邮箱，仅用于显示
         # subject = title
         # message['Subject'] = Header(subject, 'utf-8')
         # try:
-        #     ##  smtpObj = smtplib.SMTP()                          # 使用一般发信
-        #     ##  smtpObj.connect(mail_host, 25)                    # 不加密时 SMTP 端口号为 25
+        #     ##  smtpObj.connect(mail_host, 25)                    # Python 3.7 以下版本 一般发信 SMTP 端口号 25
+        #     ##  smtpObj = smtplib.SMTP()                          # Python 3.7 以下版本 一般发信
         #     ##  smtpObj = smtplib.SMTP_SSL()                      # Python 3.7 以下版本 SSL 加密发信
         #     smtpObj = smtplib.SMTP_SSL(mail_host)        # Python 3.7 及以上版本 SSL 加密发信
-        #     smtpObj.connect(mail_host, 465)              # 加密时 SMTP 端口号为 465
+        #     smtpObj.connect(mail_host, 465)              # Python 3.7 及以上版本 加密发信 SMTP 端口号 465
         #     smtpObj.login(mail_user,mail_pass)
         #     smtpObj.sendmail(sender, receivers, message.as_string())
-        #     print ("[info] Success: The email was sent successfully")
+        #     print ("[info] Success: The email was sent successfully")    # 日志输出
         # except smtplib.SMTPException:
-        #     print ("[error] Error: Can not send mail")
+        #     print ("[error] Error: Can not send mail")                   # 日志输出
 
         ## 或者发送 Server 酱的微信提醒
         # wcurl = 'https://sc.ftqq.com/' + mysckey + '.send'
