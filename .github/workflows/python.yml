@@ -2,8 +2,8 @@ name: Python 打卡
 
 on:
   #  Coordinated Universal Time (UTC)
-  # schedule:
-  #   - cron: "0 0,1,23 * * *"
+  schedule:
+    - cron: "0 0,1,23 * * *"
   workflow_dispatch:
 
 jobs:
