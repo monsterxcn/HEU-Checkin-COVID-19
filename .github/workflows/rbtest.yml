@@ -41,7 +41,7 @@ jobs:
         LANG: zh_CN.UTF-8
         SECRET_ID: ${{ secrets.SECRET_ID }}
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
-        SECRET_WECHAT: ${{ secrets.SECRET_WECHAT }}
+        SECRET_SCKEY: ${{ secrets.SECRET_SCKEY }}
       run: |
         # 如果不需要微信推送请使用下面这一行 
         # ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log
@@ -52,7 +52,7 @@ jobs:
           && echo && echo '`run.log`' \
           && echo && echo '```' && ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log \
           && echo && echo '```' && echo)" \
-          $(echo $SECRET_WECHAT)
+          $(echo $SECRET_SCKEY)
         (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a Logs/checkin-ruby.log
     - name: Commit
       env:
