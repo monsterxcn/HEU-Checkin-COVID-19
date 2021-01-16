@@ -4,12 +4,6 @@
 ####
 # 平安行动自动打卡
 # 
-# 请事先安装好 watir webdrivers 模块
-# 
-#   gem install watir headless webdrivers
-# 
-# 然后修改 20-21 行为自己的数据
-# 
 # Created on 2020-07-04 07:07
 # @author: XYenon & Monst.x
 ####

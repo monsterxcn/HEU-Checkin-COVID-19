@@ -4,13 +4,6 @@
 """
 平安行动自动打卡
 
-请事先安装好 lxml 和 requests 模块
-
-    pip install lxml requests
-
-然后修改 27-31 行为自己的数据，未使用的变量保持原样即可
-如有需要请自行配置 149-171 行的 SMTP 发信或 174-177 行的 Server 酱微信提醒
-
 Created on 2020-04-13 20:20
 @author: ZhangJiawei & Liu Chongpeng & Liu Lu
 """

@@ -34,7 +34,7 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: ${{ runner.os }}-gems-
     - name: Install
-      run: gem install watir webdrivers
+      run: gem install watir headless webdrivers
     - name: Execute
       env:
         TZ: Asia/Shanghai

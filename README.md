@@ -3,7 +3,7 @@
 <div align="center">HEU-Checkin-COVID-19</div></br>
 
 
-**由于近期校园网络调整，此项目尚未跟进修改，建议手动打卡，而不是依赖此项目**
+> **近期校园网络调整引起的打卡失败已经修复，多谢 [@liulu1998](https://github.com/liulu1998) 和 [@amberOoO](https://github.com/amberOoO) 的修改。Python 和 Ruby 版本均已测试可用，保险起见建议您执行多次定时任务防止遗漏**
 
 利用 GitHub Actions 为 HEU 宅家人士每日平安行动打卡提供便利的小项目，使用前请确认自己健康状况。
 
