@@ -1,9 +1,6 @@
-name: Python 打卡
+name: Python 测试
 
 on:
-  #  Coordinated Universal Time (UTC)
-  # schedule:
-  #   - cron: "0 0,1,23 * * *"
   workflow_dispatch:
 
 jobs:
@@ -12,6 +9,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
+      # 测试中，请勿使用
+      with:
+        ref: dev
     - name: Setup
       uses: actions/setup-python@v1
       with:
@@ -48,3 +48,5 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        # 测试中，请勿使用
+        branch: dev
