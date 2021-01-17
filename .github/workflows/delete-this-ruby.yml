@@ -49,7 +49,7 @@ jobs:
           && echo && echo '`run.log`' \
           && echo && echo '```' && ruby Self/checkin.rb | tee -a Self/checkin-ruby.log \
           && echo && echo '```' && echo)" \
-          $(echo $SECRET_SCKEY)
+          $(echo 'https://sc.ftqq.com/'$SECRET_SCKEY'.send')
         (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a Self/checkin-ruby.log
     - name: Commit
       env:
