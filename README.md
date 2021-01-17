@@ -7,8 +7,6 @@
 
 利用 GitHub Actions 为 HEU 宅家人士每日平安行动打卡提供便利的小项目，使用前请确认自己健康状况。
 
-请参考 [Wiki](https://github.com/monsterxcn/HEU-Checkin-COVID-19/wiki) 自行选择部署位置和代码版本，并修改配置。
-
 
 **快速开始**
 
@@ -35,23 +33,16 @@
 
 **文件结构**
 
- - `/Server` 目录下是服务器或本地部署的文件
- - `/Actions` 目录下是 GitHub Actions 部署的文件
- - `/Self` 目录下是 Monst.x 自用的文件
  - `/.github/workflows` 目录下是 Actions 自动打卡的工作流文件
 
    其中 `delete-this-*.yml` 文件是 Monst.x 自用的工作流文件
 
+ - `/Actions` 目录下是 **GitHub Actions 部署的文件**
+ - `/Logs` 目录下是打卡生成的日志文件
+ - `/Self` 目录下是 Monst.x 自用的文件
+ - `/Server` 目录下是 **自有机器部署的文件**
+
 > 可以参考 Monst.x 自用部署启用 Server 酱微信提醒哦～
 
 
-**一些说明**
-
- - 建议您使用 Python 版本 GitHub Actions 部署
- - 建议您至少启用邮件提醒和 Server 酱微信提醒之一
- - 如果一次打卡不能安心的话那就多打几次
- - 本项目使用的 Python 版本为 3.7+。3.7 以下版本需要修改几处代码。已知 Python 2.x 会出现错误
- - Ruby 版本打卡由于网络连接质量、校园服务器响应等某种问题可能出现失败，建议在 Linux 自有机器部署
- - 如需停止 GitHub Action，请删除仓库或删除 `.github/workerflows` 文件夹下 `.yml` 文件
- - 使用本项目因操作不当导致的平安行动打卡错误责任自负
- - 代码来自 [ZJW](https://zjw1.top) | [XYenon](https://xyenon.bid) | [@liulu1998](https://github.com/liulu1998) | [@amberOoO](https://github.com/amberOoO) | [Monst.x](https://monsterx.cn)
+**戳 [Wiki](https://github.com/monsterxcn/HEU-Checkin-COVID-19/wiki) 开始部署吧**

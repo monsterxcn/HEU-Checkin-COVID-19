@@ -159,9 +159,6 @@ if __name__ == '__main__':
         # subject = title
         # message['Subject'] = Header(subject, 'utf-8')
         # try:
-        #     ##  smtpObj.connect(mail_host, 25)                    # Python 3.7 以下版本 一般发信 SMTP 端口号 25
-        #     ##  smtpObj = smtplib.SMTP()                          # Python 3.7 以下版本 一般发信
-        #     ##  smtpObj = smtplib.SMTP_SSL()                      # Python 3.7 以下版本 SSL 加密发信
         #     smtpObj = smtplib.SMTP_SSL(mail_host)        # Python 3.7 及以上版本 SSL 加密发信
         #     smtpObj.connect(mail_host, 465)              # Python 3.7 及以上版本 加密发信 SMTP 端口号 465
         #     smtpObj.login(mail_user,mail_pass)
