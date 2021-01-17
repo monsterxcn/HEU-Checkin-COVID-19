@@ -22,8 +22,8 @@ jobs:
         git config --global user.name "github-actions[bot]"
     - name: Load upstream commits
       run: |
-        git update-index --assume-unchanged ./Logs/checkin-python.log
-        git update-index --assume-unchanged ./Logs/checkin-ruby.log
+        git update-index --assume-unchanged ./Logs/*
+        git update-index --assume-unchanged ./Self/*
         git pull https://github.com/monsterxcn/HEU-Checkin-COVID-19.git --log --no-commit
     - name: Apply commit changes
       run: |

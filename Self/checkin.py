@@ -4,17 +4,11 @@
 """
 平安行动自动打卡
 
-请事先安装好 lxml 和 requests 模块
-
-    pip install lxml requests
-
-然后修改 27-31 行为自己的数据，未使用的变量保持原样即可
-如有需要请自行配置 149-171 行的 SMTP 发信或 174-177 行的 Server 酱微信提醒
-
 Created on 2020-04-13 20:20
 @author: ZhangJiawei & Liu Chongpeng & Liu Lu
 """
 
+import os
 import requests
 import lxml.html
 import re
@@ -24,11 +18,11 @@ import time
 import smtplib
 import traceback
 
-myid = "STUDENTID"
-mypass = "PASSWORD"
-mybound = "BOUNDFIELDS"
-mydata = r'FORMDATA'
-# mysckey = "SCKEY"
+myid = os.environ ['SECRET_ID']
+mypass = os.environ ['SECRET_PASS']
+mybound = os.environ ['SECRET_BOUND']
+mydata = os.environ ['SECRET_DATA']
+mysckey = os.environ ['SECRET_SCKEY']
 
 
 title = ""
@@ -171,10 +165,10 @@ if __name__ == '__main__':
         #     print ("[error] Error: Can not send mail")                   # 日志输出
 
         ## 或者发送 Server 酱的微信提醒
-        # wcurl = 'https://sc.ftqq.com/' + mysckey + '.send'
-        # wcdata = {'text': title, 'desp': msg}
-        # wcresult = requests.post(wcurl, wcdata)
-        # print('[info] Notification sended at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
+        wcurl = 'https://sc.ftqq.com/' + mysckey + '.send'
+        wcdata = {'text': title, 'desp': msg}
+        wcresult = requests.post(wcurl, wcdata)
+        print('[info] Notification sended at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
 
         print('[info] Task Finished at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
         print('============================\n')

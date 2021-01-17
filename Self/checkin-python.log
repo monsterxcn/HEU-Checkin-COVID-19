@@ -1,0 +1,87 @@
+============================
+[debug] Begin to login ...
+
+[error] :.:.:.:.: Except return :.:.:.:.:
+[error] Python Error: 
+ Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Actions/checkin.py", line 69, in <module>
+    response302 = sesh.post(req.url, data=user_form, headers=headers)
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/requests/sessions.py", line 590, in post
+    return self.request('POST', url, data=data, json=json, **kwargs)
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/requests/sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/requests/sessions.py", line 677, in send
+    history = [resp for resp in gen]
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/requests/sessions.py", line 677, in <listcomp>
+    history = [resp for resp in gen]
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/requests/sessions.py", line 237, in resolve_redirects
+    resp = self.send(
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/requests/sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+  File "/opt/hostedtoolcache/Python/3.8.7/x64/lib/python3.8/site-packages/requests/adapters.py", line 498, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+[info] Task Finished at 2021-01-14 16:45:53 Thursday
+============================
+
+============================
+[debug] Begin to login ...
+[debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/7910239/render
+[debug] Form Status:  SUCCEED
+[debug] Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 7841748, 'entryStatus': 0, 'entryRelease': False}]}
+[info] Checkin succeed with jsoncode SUCCEED
+:.:.:.:.: Finally :.:.:.:.:
+[info] Notification sended at 2021-01-17 07:27:29 Sunday
+[info] Task Finished at 2021-01-17 07:27:29 Sunday
+============================
+
+

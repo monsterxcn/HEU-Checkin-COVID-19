@@ -3,19 +3,18 @@ name: Ruby 打卡
 on:
   # 两个工作流同时开启时等待 Python 完成提交后再开始
   # 否则由于仓库变动会导致 log 文件提交失败
-  # Coordinated Universal Time (UTC)
-  # schedule:
-  #   - cron: "20 0,1,23 * * *"
   # workflow_run:
   #   workflows: ["Python 打卡"]
   #   types: 
   #     - completed
+  #
+  schedule:
+    - cron: "30 0,1 * * *"
   workflow_dispatch:
 
 jobs:
   checkin-ruby:
     runs-on: ubuntu-latest
-    # 用于运行 headless chrome 的服务
     services:
       hub:
         image: selenium/hub:3.141.59-gold
@@ -47,19 +46,18 @@ jobs:
         LANG: zh_CN.UTF-8
         SECRET_ID: ${{ secrets.SECRET_ID }}
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
-        SECRET_SCKEY: ${{ secrets.SECRET_SCKEY }}
+        # SECRET_SCKEY: ${{ secrets.SECRET_SCKEY }}
       run: |
-        # 如果不需要微信推送请使用下面这一行 
-        # ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log
-        curl -d "text=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) \
-          && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") \
-          && echo && echo ' - 运行记录：run.log' \
-          && echo && echo '--------------' \
-          && echo && echo '`run.log`' \
-          && echo && echo '```' && ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log \
-          && echo && echo '```' && echo)" \
-          $(echo $SECRET_SCKEY)
-        (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a Logs/checkin-ruby.log
+        ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log
+        # curl -d "text=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) \
+        #   && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") \
+        #   && echo && echo ' - 运行记录：run.log' \
+        #   && echo && echo '--------------' \
+        #   && echo && echo '`run.log`' \
+        #   && echo && echo '```' && ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log \
+        #   && echo && echo '```' && echo)" \
+        #   $(echo $SECRET_SCKEY)
+        # (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a Logs/checkin-ruby.log
     - name: Commit
       env:
         TZ: Asia/Shanghai

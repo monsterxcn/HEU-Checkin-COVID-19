@@ -22,7 +22,7 @@ myid = os.environ ['SECRET_ID']
 mypass = os.environ ['SECRET_PASS']
 mybound = os.environ ['SECRET_BOUND']
 mydata = os.environ ['SECRET_DATA']
-mysckey = os.environ ['SECRET_SCKEY']
+# mysckey = os.environ ['SECRET_SCKEY']
 
 
 title = ""
@@ -165,10 +165,10 @@ if __name__ == '__main__':
         #     print ("[error] Error: Can not send mail")                   # 日志输出
 
         ## 或者发送 Server 酱的微信提醒
-        wcurl = 'https://sc.ftqq.com/' + mysckey + '.send'
-        wcdata = {'text': title, 'desp': msg}
-        wcresult = requests.post(wcurl, wcdata)
-        print('[info] Notification sended at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
+        # wcurl = 'https://sc.ftqq.com/' + mysckey + '.send'
+        # wcdata = {'text': title, 'desp': msg}
+        # wcresult = requests.post(wcurl, wcdata)
+        # print('[info] Notification sended at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
 
         print('[info] Task Finished at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
         print('============================\n')

@@ -1,12 +1,13 @@
-name: Ruby 测试
+name: 作者自用 Ruby 打卡
 
 on:
+  schedule:
+    - cron: "30 1 * * *"
   workflow_dispatch:
 
 jobs:
-  checkin-ruby:
+  self-checkin-ruby:
     runs-on: ubuntu-latest
-    # 用于运行 headless chrome 的服务
     services:
       hub:
         image: selenium/hub:3.141.59-gold
@@ -20,9 +21,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-      # 测试中，请勿使用
-      with:
-        ref: dev
     - name: Setup
       uses: actions/setup-ruby@v1
       with:
@@ -43,17 +41,16 @@ jobs:
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
         SECRET_SCKEY: ${{ secrets.SECRET_SCKEY }}
       run: |
-        # 如果不需要微信推送请使用下面这一行 
         # ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log
         curl -d "text=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) \
           && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") \
           && echo && echo ' - 运行记录：run.log' \
           && echo && echo '--------------' \
           && echo && echo '`run.log`' \
-          && echo && echo '```' && ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log \
+          && echo && echo '```' && ruby Self/checkin.rb | tee -a Self/checkin-ruby.log \
           && echo && echo '```' && echo)" \
           $(echo $SECRET_SCKEY)
-        (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a Logs/checkin-ruby.log
+        (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a Self/checkin-ruby.log
     - name: Commit
       env:
         TZ: Asia/Shanghai
@@ -61,7 +58,7 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git pull
-        git add Logs/checkin-ruby.log
+        git add Self/checkin-ruby.log
         git commit -m \
           "Update ruby log at \
           $(date +"%Y-%m-%d %H:%M") \
@@ -70,5 +67,3 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        # 测试中，请勿使用
-        branch: dev

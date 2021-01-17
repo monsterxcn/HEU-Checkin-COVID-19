@@ -1,17 +1,16 @@
-name: Python 测试
+name: 作者自用 Python 打卡
 
 on:
+  schedule:
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
-  checkin-python:
+  self-checkin-python:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@master
-      # 测试中，请勿使用
-      with:
-        ref: dev
     - name: Setup
       uses: actions/setup-python@v1
       with:
@@ -32,14 +31,14 @@ jobs:
         SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
         SECRET_DATA: ${{ secrets.SECRET_DATA }}
         SECRET_SCKEY: ${{ secrets.SECRET_SCKEY }}
-      run: python Actions/checkin.py | tee -a Logs/checkin-python.log
+      run: python Self/checkin.py | tee -a Self/checkin-python.log
     - name: Commit
       env:
         TZ: Asia/Shanghai
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add Logs/checkin-python.log
+        git add Self/checkin-python.log
         git commit -m \
           "Update python log at \
           $(date +"%Y-%m-%d %H:%M") \
@@ -48,5 +47,3 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        # 测试中，请勿使用
-        branch: dev
