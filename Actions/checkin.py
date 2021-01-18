@@ -164,8 +164,11 @@ if __name__ == '__main__':
         ## 或者发送 Server 酱的微信提醒
         wcurl = 'https://sc.ftqq.com/' + mysckey + '.send'
         wcdata = {'text': title, 'desp': msg}
-        wcresult = requests.post(wcurl, wcdata)
-        print('[info] Notification sended at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
+        try:
+            wcresult = requests.post(wcurl, wcdata)
+            print('[info] Notification sended at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
+        except:
+            print('[error] Failed to send notification!')
 
         print('[info] Task Finished at', time.strftime("%Y-%m-%d %H:%M:%S %A", time.localtime()))
         print('============================\n')
