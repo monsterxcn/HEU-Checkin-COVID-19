@@ -34,19 +34,19 @@ end
 
 ## CAS login
 login(browser, USERNAME, PASSWORD)
-puts '[debug] Login CAS success...'
+puts '[debug] Login CAS Success...'
 
 ## Form loading
 browser.goto 'http://jkgc.hrbeu.edu.cn/infoplus/form/JSXNYQSBtest/start'
 browser.wait_until(timeout: 120, interval: 3) do |b|
   b.div(id: 'div_loader').style.include?('display: none;')
 end
-puts '[debug] Form loaded...'
+puts '[debug] Form Loaded...'
 
 ## Checkbox select
 cb = browser.checkbox(id: 'V1_CTRL82')
 cb.set unless cb.set?
-puts '[debug] Checkbox checked...'
+puts '[debug] Checkbox Checked...'
 
 ## Form submit
 browser.link(text: '确认填报').click
