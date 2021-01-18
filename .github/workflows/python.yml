@@ -31,7 +31,7 @@ jobs:
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
         SECRET_BOUND: ${{ secrets.SECRET_BOUND }}
         SECRET_DATA: ${{ secrets.SECRET_DATA }}
-        # SECRET_SCKEY: ${{ secrets.SECRET_SCKEY }}
+        SECRET_SCKEY: ${{ secrets.SECRET_SCKEY }}
       run: python Actions/checkin.py | tee -a Logs/checkin-python.log
     - name: Commit
       env:

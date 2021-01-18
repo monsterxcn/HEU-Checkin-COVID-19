@@ -26,7 +26,7 @@
  - 如果你希望白嫖 GitHub Actions → [部署到 Actions](https://github.com/monsterxcn/HEU-Checkin-COVID-19/wiki/%E9%83%A8%E7%BD%B2%E5%88%B0-Actions)
  - 如果你希望在自己的计算机上部署 → [部署到自有机器](https://github.com/monsterxcn/HEU-Checkin-COVID-19/wiki/%E9%83%A8%E7%BD%B2%E5%88%B0%E8%87%AA%E6%9C%89%E6%9C%BA%E5%99%A8)
 
-最后为了安心的睡眠，你可能还需要 [启用 SMTP 邮件提醒](https://github.com/monsterxcn/HEU-Checkin-COVID-19/wiki/%E5%90%AF%E7%94%A8-SMTP-%E9%82%AE%E4%BB%B6%E6%8F%90%E9%86%92) 或者 [启用 Server 酱微信提醒](https://github.com/monsterxcn/HEU-Checkin-COVID-19/wiki/%E5%90%AF%E7%94%A8-Server-%E9%85%B1%E5%BE%AE%E4%BF%A1%E6%8F%90%E9%86%92)（默认均未启用）来通知你打卡的结果。
+最后为了安心的睡眠，你可能还需要 [启用 SMTP 邮件提醒](https://github.com/monsterxcn/HEU-Checkin-COVID-19/wiki/%E5%90%AF%E7%94%A8-SMTP-%E9%82%AE%E4%BB%B6%E6%8F%90%E9%86%92) 或者 [启用 Server 酱微信提醒](https://github.com/monsterxcn/HEU-Checkin-COVID-19/wiki/%E5%90%AF%E7%94%A8-Server-%E9%85%B1%E5%BE%AE%E4%BF%A1%E6%8F%90%E9%86%92)（默认启用）来通知你打卡的结果。
 
 
 ## 文件结构

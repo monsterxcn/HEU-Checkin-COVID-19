@@ -41,16 +41,12 @@ jobs:
         SECRET_PASS: ${{ secrets.SECRET_PASS }}
         SECRET_SCKEY: ${{ secrets.SECRET_SCKEY }}
       run: |
-        # ruby Actions/checkin.rb | tee -a Logs/checkin-ruby.log
-        curl -d "text=打卡状态&desp=$(echo && echo ' - 签到账号：'$(echo $SECRET_ID) \
-          && echo && echo ' - 签到时间：'$(date +"%Y-%m-%d %H:%M:%S %A") \
-          && echo && echo ' - 运行记录：run.log' \
-          && echo && echo '--------------' \
-          && echo && echo '`run.log`' \
-          && echo && echo '```' && ruby Self/checkin.rb | tee -a Self/checkin-ruby.log \
-          && echo && echo '```' && echo)" \
-          $(echo 'https://sc.ftqq.com/'$SECRET_SCKEY'.send')
-        (echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") && echo '=========================' && echo) | tee -a Self/checkin-ruby.log
+        ruby Self/checkin.rb | tee tmp | tee -a Self/checkin-ruby.log
+        curl -d "text=${SECRET_ID}$(if [[ $(tail -n 3 tmp) =~ "Success" ]] then echo "打卡成功"; else echo "打卡失败"; fi)\
+        &desp=$(echo '运行日志：checkin-ruby.log' && echo && echo '---' && echo && echo '```' && cat tmp && echo '```')" \
+        https://sc.ftqq.com/${SECRET_SCKEY}.send
+        echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") >> Self/checkin-ruby.log
+        echo '=========================\n' >> Self/checkin-ruby.log && rm tmp
     - name: Commit
       env:
         TZ: Asia/Shanghai
