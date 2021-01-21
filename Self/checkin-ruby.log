@@ -67,3 +67,14 @@
 =========================
 [info] Log Sent at 2021-01-20 08:38:14 Wednesday
 =========================\n
+=========================
+[debug] Login CAS Success...
+[debug] Form Loaded...
+[debug] Checkbox Checked...
+[debug] Form Submitted...
+[debug] 平安行动:填报健康信息(已完成)
+[info] Checkin Success!
+[info] End at 2021-01-21 08:38:36 +0800.
+=========================
+[info] Log Sent at 2021-01-21 08:38:38 Thursday
+=========================\n
