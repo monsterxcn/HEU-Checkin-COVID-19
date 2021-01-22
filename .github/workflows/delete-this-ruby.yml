@@ -42,11 +42,11 @@ jobs:
         SECRET_SCKEY: ${{ secrets.SECRET_SCKEY }}
       run: |
         ruby Self/checkin.rb | tee tmp | tee -a Self/checkin-ruby.log
-        curl -d "text=${SECRET_ID}$(if [[ $(tail -n 3 tmp) =~ "Success" ]]; then echo "打卡成功"; else echo "打卡失败"; fi)\
+        curl -d "text=${SECRET_ID}$(if [[ $(tail -n 3 tmp) =~ "Success!" ]]; then echo "打卡成功"; else echo "打卡失败"; fi)\
         &desp=$(echo '运行日志：checkin-ruby.log' && echo && echo '---' && echo && echo '```' && cat tmp && echo '```')" \
         https://sc.ftqq.com/${SECRET_SCKEY}.send
         echo "[info] Log Sent at "$(date +"%Y-%m-%d %H:%M:%S %A") >> Self/checkin-ruby.log
-        echo '=========================\n' >> Self/checkin-ruby.log && rm tmp
+        (echo '=========================' && echo) >> Self/checkin-ruby.log && rm tmp
     - name: Commit
       env:
         TZ: Asia/Shanghai
