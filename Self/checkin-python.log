@@ -459,3 +459,14 @@ requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetErro
 [info] Task Finished at 2021-02-17 07:40:34 Wednesday
 ============================
 
+============================
+[debug] Begin to login ...
+[debug] Form url:  http://jkgc.hrbeu.edu.cn/infoplus/form/8802967/render
+[debug] Form Status:  SUCCEED
+[debug] Form stJson:  {'errno': 0, 'ecode': 'SUCCEED', 'entities': [{'stepId': 2, 'name': '办结', 'code': 'autoStep1', 'status': 0, 'type': 'Auto', 'flowStepId': 0, 'executorSelection': 0, 'timestamp': 0, 'posts': [], 'users': [], 'parallel': False, 'hasInstantNotification': False, 'hasCarbonCopy': False, 'entryId': 8734476, 'entryStatus': 0, 'entryRelease': False}]}
+[info] Checkin succeed with jsoncode SUCCEED
+:.:.:.:.: Finally :.:.:.:.:
+[info] Notification sended at 2021-02-18 07:40:52 Thursday
+[info] Task Finished at 2021-02-18 07:40:52 Thursday
+============================
+
