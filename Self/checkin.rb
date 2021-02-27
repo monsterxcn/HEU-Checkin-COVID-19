@@ -18,12 +18,12 @@ puts '========================='
 Watir.default_timeout = 120
 args = ['--headless', '--no-sandbox', '--ignore-certificate-errors', '--disable-dev-shm-usage', '--disable-translate', '--window-size=1920x1080']
 browser = Watir::Browser.new :chrome, options: {args: args}
-browser.goto 'https://cas.hrbeu.edu.cn/cas/login?'
+browser.goto 'https://cas.hrbeu.edu.cn/cas/login'
 
 def login(browser, username, password)
   browser.text_field(id: 'username').set username
   browser.text_field(id: 'password').set password
-  browser.button(name: 'submit').click
+  browser.button(name: 'login_submit').click
 end
 
 ## CAS login
@@ -59,7 +59,7 @@ puts '[debug] ' + browser.div(id: 'title_content').text
 if browser.div(id: 'title_content').text.include?('已完成')
   puts '[info] Checkin Success!'
 else
-  puts '[error] Checkin Fail!'
+  puts '[error] Checkin Failed!'
 end
 puts '[info] End at ' + Time.now.to_s + '.'
 browser.close

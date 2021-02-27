@@ -33,12 +33,14 @@ proxies = {"http": None, "https": None}
 headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
-    "Accept-Language": "zh-CN",
+    "Accept-Language": "zh-CN,zh;q=0.9",
     "Cache-Control": "max-age=0",
     "Connection": "keep-alive",
     "Content-Type": "application/x-www-form-urlencoded",
-    "Cookie": "MESSAGE_TICKET=%7B%22times%22%3A0%7D; ",
+    "Cookie": "",
     "Host": "cas.hrbeu.edu.cn",
+    "Origin": "https://cas.hrbeu.edu.cn",
+    "Referer": "https://cas.hrbeu.edu.cn/cas/login",
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18362"
 }
@@ -51,19 +53,20 @@ def findStr(source, target):
 if __name__ == '__main__':
     try:
         ## 登陆校园网络认证界面
-        url_login = 'https://cas.hrbeu.edu.cn/cas/login?'
+        url_login = 'https://cas.hrbeu.edu.cn/cas/login'
         print("============================\n[debug] Begin to login ...")
         sesh = requests.session()
         req = sesh.get(url_login, proxies=proxies)
         html_content = req.text
         login_html = lxml.html.fromstring(html_content)
-        hidden_inputs = login_html.xpath( r'//div[@id="main"]//input[@type="hidden"]')
+        hidden_inputs = login_html.xpath(r'//input[@type="hidden" and @class="for-form"]')
         user_form = {x.attrib["name"]: x.attrib["value"] for x in hidden_inputs}
+        if user_form['pid'] == '':
+            user_form.pop('pid')
         user_form["username"] = myid
         user_form["password"] = mypass
-        user_form["captcha"] = ''
-        user_form["submit"] = '登 录'
-        headers['Cookie'] = headers['Cookie'] + req.headers['Set-cookie']
+        user_form["_eventId"] = 'submit'
+        headers['Cookie'] = headers['Cookie'] + req.headers['Set-cookie'].split(' ')[0] + req.headers['Set-cookie'].split(' ')[3]
         req.url = f'https://cas.hrbeu.edu.cn/cas/login'
         response302 = sesh.post(req.url, data=user_form, headers=headers, proxies=proxies)
 
