@@ -1,0 +1,17 @@
+ww205a0XXXXXX9487c
+loPX-WKdsc4_fEjtolvh7aXXXXXXXXXXXXXfeel4
+100000X
+
+
+20XX0XXXXX
+01011234
+fieldCXXXdqszdjtx,fieldCXXXjtgjbc,fieldGLJL,...  BOUNDFIELDS HERE  ...,fieldJBXXdw,fieldCFDD,fieldCXXXsftjhbjtdz,fieldMQJCRlxfs
+{"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXXX学院",...  FORMDATA HERE  ...,"_VAR_ENTRY_NAME":"平安行动_","_VAR_ENTRY_TAGS":"生活服务"}
+@all
+
+20XX0YYYYY
+01015678
+fieldCXXXdqszdjtx,fieldCXXXjtgjbc,fieldGLJL,...  BOUNDFIELDS HERE  ...,fieldJBXXdw,fieldCFDD,fieldCXXXsftjhbjtdz,fieldMQJCRlxfs
+{"_VAR_EXECUTE_INDEP_ORGANIZE_Name":"XXXX学院",...  FORMDATA HERE  ...,"_VAR_ENTRY_NAME":"平安行动_","_VAR_ENTRY_TAGS":"生活服务"}
+@all
+
